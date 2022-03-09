@@ -3,7 +3,7 @@ module.exports = (Discord, bot, message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
-    const command = client.commands.get(cmd);
+    const command = bot.commands.get(cmd);
 
     if(command) command.execute(bot, message, args, Discord);
 }
