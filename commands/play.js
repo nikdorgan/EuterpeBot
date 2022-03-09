@@ -4,7 +4,7 @@ const ytSearch = require('yt-search');
 module.exports = {
     name: 'play',
     description: 'Joins and plays audio from YouTube video',
-    async execute(message, args) {
+    async execute(bot, message, args, Discord) {
         const voiceChannel = message.member.voice.channel;
 
         if (!voiceChannel) return message.channel.send('You must be in a channel to use this feature');

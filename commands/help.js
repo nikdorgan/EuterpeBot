@@ -1,7 +1,7 @@
 module.exports = {
     name: 'help',
     description: 'Gives info on bot',
-    execute(message, args) {
+    execute(bot, message, args, Discord) {
         message.channel.send('PREFIX: $');
         message.channel.send('COMMANDS: ');
         message.channel.send('help - Lists bot commands');
