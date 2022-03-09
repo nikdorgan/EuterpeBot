@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 require('dotenv').config();
 const PREFIX = '$'; 
+
 // const fs = require('fs');
 // const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 // bot.commands = new Discord.Collection();
@@ -23,9 +24,10 @@ bot.on('message', message => {
     let args = message.content.substring(PREFIX.length).split(" ");
 
     switch (args[0]) {
-        // case 'help':
-        //     // bot.commands.get('help').execute(message, args);
-        //     break;
+        case 'help':
+            message.channel.send("Test");
+            // bot.commands.get('help').execute(message, args);
+            break;
 
         case 'clear':
             message.channel.bulkDelete(100);
