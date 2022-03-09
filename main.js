@@ -23,7 +23,7 @@ bot.on('message', message => {
 
     switch (args[0]) {
         case 'help':
-            // bot.commands.get('help').execute(message, args);
+            bot.commands.get('help').execute(message, args);
             break;
 
         case 'clear':
