@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const PREFIX = '$';
+const PREFIX = '$'; 
 const fs = require('fs');
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 bot.commands = new Discord.Collection();
