@@ -1,6 +1,6 @@
+require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-require('dotenv').config();
 const PREFIX = '$';
 const fs = require('fs');
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
@@ -20,7 +20,8 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-    let args = message.content.substring(PREFIX.length).split(" ");
+    if(!message.content.startsWith(PREFIX) || message.author.bot) return;
+    const args = message.content.slice(PREFIX.length).split(/ +/);
 
     switch (args[0]) {
         case 'help':
