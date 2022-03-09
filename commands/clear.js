@@ -1,7 +1,7 @@
 module.exports = {
     name: 'clear',
     description: "Removes channel messages",
-    execute(bot, message, args, Discord) {
+    execute(message, args, cmd, bot, Discord) {
         message.channel.bulkDelete(100);
     }
 }

@@ -5,7 +5,7 @@ module.exports = {
     name: 'play',
     aliases: 'p',
     description: 'Joins and plays audio from YouTube video',
-    async execute(bot, message, args, Discord) {
+    async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
 
         if (!voiceChannel) return message.channel.send('You must be in a channel to use this feature');
