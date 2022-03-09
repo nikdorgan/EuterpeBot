@@ -3,6 +3,7 @@ const ytSearch = require('yt-search');
 
 module.exports = {
     name: 'play',
+    aliases: 'p',
     description: 'Joins and plays audio from YouTube video',
     async execute(bot, message, args, Discord) {
         const voiceChannel = message.member.voice.channel;
