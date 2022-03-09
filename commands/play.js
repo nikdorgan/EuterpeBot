@@ -26,13 +26,13 @@ module.exports = {
         if(validURL(args[0])){
             const connection = await voiceChannel.join();
             const stream = ytdl(args[0], { filter: 'audioonly' });
+
             connection.play(stream, { seek: 0, volume: 1 })
             .on('finish', () => {
                 voiceChannel.leave();
             });
 
             await message.reply(`Now Playing: ${video.title}`);
-
             return;
         }
 
