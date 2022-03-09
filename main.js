@@ -1,7 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const PREFIX = '$';
+const prefix = '$';
 const fs = require('fs');
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 bot.commands = new Discord.Collection();
@@ -20,16 +20,26 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-    if(!message.content.startsWith(PREFIX) || message.author.bot) return;
-    const args = message.content.slice(PREFIX.length).split(/ +/);
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    switch (args[0]) {
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+
+    switch (command) {
         case 'help':
             bot.commands.get('help').execute(message, args);
             break;
 
         case 'clear':
             message.channel.bulkDelete(100);
+            break;
+
+        case 'play':
+            bot.commands.get('play').execute(message, args);
+            break;
+
+        case 'stop':
+            bot.commands.get('stop').execute(message, args);
             break;
     }
 })
