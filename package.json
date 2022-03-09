@@ -1,0 +1,11 @@
+{
+  "name": "swagbot",
+  "version": "1.0.0",
+  "description": "A very swag music bot",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nikolas Dorgan",
+  "license": "ISC"
+}
