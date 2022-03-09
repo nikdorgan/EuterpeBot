@@ -32,7 +32,7 @@ module.exports = {
                 voiceChannel.leave();
             });
 
-            await message.reply(`Now Playing: ${video.title}`);
+            await message.reply(`Now Playing...`);
             return;
         }
 
