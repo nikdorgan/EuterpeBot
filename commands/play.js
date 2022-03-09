@@ -23,8 +23,13 @@ module.exports = {
         }
 
         const video = await videoFinder(args.join(' '));
-        
 
-
+        if(video){
+            const stream = ytdl(video.url, {filter: 'audioonly'});
+            connection.play(stream, {seek: 0, volume: 1})
+            .on('finish', () => {
+                voiceChannel.leave();
+            });
+        }
     }
 }
