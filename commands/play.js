@@ -6,9 +6,10 @@ module.exports = {
     description: 'Joins and plays audio from YouTube video',
     async execute(message, args) {
         const voiceChannel = message.member.voice.channel;
-        const permissions = voiceChannel.permissionsFor(message.client.user);
 
         if (!voiceChannel) return message.channel.send('You must be in a channel to use this feature');
+
+        const permissions = voiceChannel.permissionsFor(message.client.user);
         if (!permissions.has('CONNECT')) return message.channel.send('You do not have permission to use this feature');
         if (!permissions.has('SPEAK')) return message.channel.send('You do not have permission to use this feature');
         if (!args.length) return message.channel.send('Please use a YouTube URL');
