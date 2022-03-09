@@ -4,7 +4,7 @@ const ytSearch = require('yt-search');
 module.exports = {
     name: 'play',
     description: 'Joins and plays audio from YouTube video',
-    execute(message, args) {
+    async execute(message, args) {
         const voiceChannel = message.member.voice.channel;
         const permissions = voiceChannel.permissionsFor(message.client.user);
 
@@ -30,6 +30,10 @@ module.exports = {
             .on('finish', () => {
                 voiceChannel.leave();
             });
+
+            await message.reply(`Now Playing: ${video.title}`);
+        } else {
+            message.channel.send('Error: We had trouble finding your video :(');
         }
     }
 }
