@@ -93,7 +93,11 @@ const skipSong = (message, serverQueue) => {
     if (!serverQueue) {
         return message.channel.send(`There currently are no songs in the queue`);
     }
-    serverQueue.connection.dispatcher.end();
+    try{
+        serverQueue.connection.dispatcher.end();
+    } catch {
+        return;
+    }
 }
 
 const stopSong = (message, serverQueue) => {
