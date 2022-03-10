@@ -16,6 +16,7 @@ module.exports = (Discord, bot, message) => {
     catch (err){
         message.reply("There was an error trying to execute this command :(");
         console.log(err);
+        return;
     }
     
 }
