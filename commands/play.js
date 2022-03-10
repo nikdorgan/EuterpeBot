@@ -93,11 +93,13 @@ const skipSong = (message, serverQueue) => {
     if (!serverQueue) {
         return message.channel.send(`There currently are no songs in the queue`);
     }
+    message.channel.send('Skipping...');
     serverQueue.connection.dispatcher.end();
 }
 
 const stopSong = (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a voice channel to use this feature.');
+    message.channel.send('Stopping...');
     serverQueue.songs = [];
     serverQueue.connection.dispatcher.end();
 }
