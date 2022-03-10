@@ -1,6 +1,5 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
-
 const queue = new Map();
 
 module.exports = {
@@ -8,9 +7,9 @@ module.exports = {
     aliases: ['p', 'skip', 'stop'],
     description: 'Advanced music bot',
     async execute(message, args, cmd, bot, Discord) {
-
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return message.channel.send('You need to be in a voice channel to use this feature.');
+
         const permissions = voiceChannel.permissionsFor(message.client.user);
         if (!permissions.has('CONNECT')) return message.channel.send('You dont have the permission to use this feature.');
         if (!permissions.has('SPEAK')) return message.channel.send('You dont have the permission to use this feature.');
@@ -93,7 +92,8 @@ const skipSong = (message, serverQueue) => {
     if (!serverQueue) {
         return message.channel.send(`There currently are no songs in the queue`);
     }
-    try{
+
+    try {
         serverQueue.connection.dispatcher.end();
     } catch {
         return;
@@ -104,7 +104,7 @@ const stopSong = (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a voice channel to use this feature.');
     serverQueue.songs = [];
 
-    try{
+    try {
         serverQueue.connection.dispatcher.end();
     } catch {
         return;
