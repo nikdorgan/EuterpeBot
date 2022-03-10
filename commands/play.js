@@ -95,6 +95,8 @@ const skipSong = (message, serverQueue) => {
 
     try {
         serverQueue.connection.dispatcher.end();
+        songQueue.songs.shift();
+        videoPlayer(guild, songQueue.songs[0]);
     } catch {
         return;
     }
