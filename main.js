@@ -9,4 +9,9 @@ bot.events = new Discord.Collection();
     require(`./handlers/${handler}`)(bot, Discord);
 })
 
+ffmpeg_options = {
+    'options': '-vn',
+    "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
+}
+
 bot.login(process.env.BOT_TOKEN);
