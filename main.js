@@ -11,7 +11,7 @@ bot.events = new Discord.Collection();
 
 ffmpeg_options = {
     'options': '-vn',
-    "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
+    "before_options": "-reconnect 1 -reconnect_at_eof 1 -reconnect_streamed 1 -reconnect_delay_max 4294"
 }
 
 bot.login(process.env.BOT_TOKEN);
