@@ -1,7 +1,6 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 
-//Global queue for your bot. Every server will have a key and value pair in this map. { guild.id, queueConstructor{} }
 const queue = new Map();
 
 module.exports = {
@@ -16,7 +15,6 @@ module.exports = {
         if (!permissions.has('CONNECT')) return message.channel.send('You dont have the permission to use this feature.');
         if (!permissions.has('SPEAK')) return message.channel.send('You dont have the permission to use this feature.');
 
-        //This is our server queue. We are getting this server queue from the global queue.
         const serverQueue = queue.get(message.guild.id);
 
         if (cmd === 'play') {
@@ -76,7 +74,6 @@ module.exports = {
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
 
-    //If no song is left in the server queue. Leave the voice channel and delete the key and value pair from the global queue.
     if (!song) {
         songQueue.voiceChannel.leave();
         queue.delete(guild.id);
