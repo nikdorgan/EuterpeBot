@@ -108,6 +108,7 @@ const stopSong = (message, serverQueue) => {
 
     try {
         serverQueue.connection.dispatcher.end();
+        voiceChannel.leave();
     } catch {
         return;
     }
