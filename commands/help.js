@@ -2,19 +2,6 @@ module.exports = {
     name: 'help',
     description: 'Gives info on bot commands',
     execute(message, args, cmd, bot, Discord) {
-        message.channel.send('PREFIX: $');
-        message.channel.send('COMMANDS: ');
-        message.channel.send('clear - Clears messages in the channel and turns off server tracker');
-        message.channel.send('help - Lists bot commands');
-
-
-
-
-
-        // at the top of your file
-        const { MessageEmbed } = require('discord.js');
-
-        // inside a command, event listener, etc.
         const helpEmbed = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Commands')
@@ -27,6 +14,6 @@ module.exports = {
                 { name: '$info', value: 'Shows some background info on the bot itself' }
             );
 
-        channel.send({ embeds: [helpEmbed] });
+        message.channel.send(helpEmbed);
     }
 }
