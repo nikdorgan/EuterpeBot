@@ -30,6 +30,7 @@ module.exports = {
                 }
 
                 const video = await videoFinder(args.join(' '));
+
                 if (video) {
                     song = { title: video.title, url: video.url }
                 } else {
@@ -58,6 +59,7 @@ module.exports = {
                     message.channel.send('There was an error connecting.');
                     throw err;
                 }
+
             } else {
                 serverQueue.songs.push(song);
                 return message.channel.send(`${song.title} added to queue.`);
@@ -67,9 +69,7 @@ module.exports = {
         else if (cmd === 'skip') skipSong(message, serverQueue);
         else if (cmd === 'stop') stopSong(message, serverQueue);
 
-
     }
-
 }
 
 const videoPlayer = async (guild, song) => {
@@ -80,20 +80,25 @@ const videoPlayer = async (guild, song) => {
         queue.delete(guild.id);
         return;
     }
+
     const stream = ytdl(song.url, { filter: 'audioonly' });
+
     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
         .on('finish', () => {
             songQueue.songs.shift();
             videoPlayer(guild, songQueue.songs[0]);
         });
+
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
 }
 
 const skipSong = (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a voice channel to use this feature.');
+
     if (!serverQueue) {
         return message.channel.send(`There currently are no songs in the queue`);
     }
+
     serverQueue.connection.dispatcher.end();
 }
 
