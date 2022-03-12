@@ -94,18 +94,18 @@ const skipSong = (message, serverQueue) => {
     if (!serverQueue) {
         return message.channel.send(`There currently are no songs in the queue`);
     }
-
-    try {
-        serverQueue.connection.dispatcher.end();
-        songQueue.songs.shift();
-        videoPlayer(guild, songQueue.songs[0]);
-    } catch {
-        return;
-    }
+    serverQueue.connection.dispatcher.end();
 }
 
-const stopSong = (message, serverQueue) => {
+const stopSong = (message, serverQueue, voiceChannel) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
     serverQueue.songs = [];
-    serverQueue.connection.dispatcher.end();
+    try {
+        serverQueue.connection.dispatcher.end();
+    }
+    catch {
+        serverQueue = null;
+        voiceChannel.leave()
+    }
+
 }
