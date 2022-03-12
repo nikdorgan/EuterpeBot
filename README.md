@@ -1,1 +1,1 @@
-# swagbot
+# EuterpeBot
