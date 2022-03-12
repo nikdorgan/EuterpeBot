@@ -20,8 +20,6 @@ $clear - This command deletes 100 messages from the channel that it is invoked i
 
 $help - Lists these commands in case you forget!
 
-$info - Shows some background info on the bot itself
-
 CREDIT
   
 This project was coded exclusively by me: https://github.com/nikdorgan
