@@ -12,9 +12,9 @@ $play <search or URL> - This is the main command to use the music feature, this 
 
 $p <search or URL> - This command is the same as the one above, but shorthand for ease of use 
 
-$skip - This stops playback of the current song and moves to the next one in the query
+$skip - This stops playback of the current song and moves to the next one in the queue
 
-$stop - Completely clears the query and forces the bot out of the voice channel
+$stop - Completely clears the queue and forces the bot out of the voice channel
 
 $clear - This command deletes 100 messages from the channel that it is invoked in, use this feature ONLY to clean up a dedicated music text channel
 
