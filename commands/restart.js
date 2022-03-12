@@ -3,7 +3,7 @@ module.exports = {
     description: "Restarts bot iin the event of a crash",
     execute(message, args, cmd, bot, Discord) {
         message.channel.send('Restarting...')
-            .then(msg => bot.destroy())
-            .then(() => bot.login(process.env.BOT_TOKEN));
+            .then(() => bot.destroy())
+            // .then(() => bot.login(process.env.BOT_TOKEN));
     }
 }
