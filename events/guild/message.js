@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 module.exports = (Discord, bot, message) => {
     const prefix = process.env.PREFIX;
 
@@ -12,11 +13,9 @@ module.exports = (Discord, bot, message) => {
 
     try {
         command.execute(message, args, cmd, bot, Discord);
-    }
-    catch (err){
+    } catch (err) {
         message.channel.send("There was an error trying to execute this command.");
         console.log(err);
         return;
     }
-    
 }
