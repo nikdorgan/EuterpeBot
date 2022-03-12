@@ -66,6 +66,8 @@ module.exports = {
 
         else if (cmd === 'skip') skipSong(message, serverQueue);
         else if (cmd === 'stop') stopSong(message, serverQueue);
+
+
     }
 
 }
@@ -104,6 +106,6 @@ const skipSong = (message, serverQueue) => {
 
 const stopSong = (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a voice channel to use this feature.');
-    serverQueue = null;
-    return voiceChannel.leave();
+    serverQueue.songs = [];
+    return;
 }
