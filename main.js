@@ -1,7 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const bot = new Discord.Client(); 
-
 bot.commands = new Discord.Collection();
 bot.events = new Discord.Collection();
 
@@ -14,4 +13,4 @@ ffmpeg_options = {
     "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 200"
 }
 
-bot.login(process.env.BOT_TOKEN);  
+bot.login(process.env.BOT_TOKEN);
