@@ -2,7 +2,7 @@ module.exports = {
     name: 'help',
     description: 'Gives info on bot commands',
     execute(message, args, cmd, bot, Discord) {
-        const helpEmbed = new MessageEmbed()
+        const helpEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Commands')
             .addFields(
