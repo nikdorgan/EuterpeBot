@@ -8,9 +8,9 @@ This bot accepts both a search query or a URL, and scours YouTube to find the mo
 
 COMMANDS
 
-$play <search or URL> - This is the main command to use the music feature, this adds the song to a query to be played when it has been reached
+$play (search or URL) - This is the main command to use the music feature, this adds the song to a queue to be played when it has been reached
 
-$p <search or URL> - This command is the same as the one above, but shorthand for ease of use 
+$p (search or URL) - This command is the same as the one above, but shorthand for ease of use 
 
 $skip - This stops playback of the current song and moves to the next one in the queue
 
