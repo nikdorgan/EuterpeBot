@@ -14,4 +14,4 @@ ffmpeg_options = {
     "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 200"
 }
 
-bot.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);  
