@@ -104,6 +104,6 @@ const skipSong = (message, serverQueue) => {
 
 const stopSong = (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a voice channel to use this feature.');
-    serverQueue.songs = [];
+    serverQueue = null;
     return voiceChannel.leave();
 }
