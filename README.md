@@ -28,4 +28,4 @@ This project was coded exclusively by me: https://github.com/nikdorgan
 
 LICENCE
   
-Due to YouTube’s terms of service, EuterpeBot is not public, only useful for private, non-commercial use, and because of this the code is not licensed. If you would like to use EuterpeBot however, you are free to make use of my code! 
+Due to YouTube’s terms of service, EuterpeBot is not public, only useful for private, non-commercial use, and because of this the code is not licensed. If you would like to use EuterpeBot, you are free to make use of my code! 
