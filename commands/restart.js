@@ -4,6 +4,5 @@ module.exports = {
     execute(message, args, cmd, bot, Discord) {
         message.channel.send('Restarting...')
             .then(() => bot.destroy())
-            // .then(() => bot.login(process.env.BOT_TOKEN));
     }
 }
