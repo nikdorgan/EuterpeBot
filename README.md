@@ -5,7 +5,7 @@ EuterpeBot – A Discord Bot for Playing Music in a Voice Channel
 
 BACKGROUND
 
-This bot accepts both a search query or a URL, and scours YouTube to find the most applicable video. It extracts the audio from this video and then plays it back in the voice channel of the user that queried it, so discord users can enjoy their favorite songs while calling their friends! This bot is written in JavaScript, specifically to make use of the dependencies yt-search and ytdl-core, which finds the YouTube video based on the query. It also uses FFMpeg to extract the audio that is then played back in the call. At present, this bot is hosted using the free online hosting service Heroku. Unfortunately because of this, latency presents an issue for the bot, and as such, videos over 5 minutes long are not recommended for this bot.
+This bot accepts both a search query or a URL, and scours YouTube to find the most applicable video. It extracts the audio from this video and then plays it back in the voice channel of the user that queried it, so discord users can enjoy their favorite songs while calling their friends! This bot is written in JavaScript, specifically to make use of the dependencies yt-search and ytdl-core, which finds the YouTube video based on the query. It also uses FFMpeg to extract the audio that is then played back in the call.
 
 
 COMMANDS
