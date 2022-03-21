@@ -5,8 +5,9 @@ const queue = new Map();
 module.exports = {
     name: 'play',
     aliases: ['p', 'skip', 'stop'],
-    description: 'Advanced music bot',
+    description: 'The actual music feature',
     async execute(message, args, cmd, bot, Discord) {
+        //Checks to make sure user can actually use the bot
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return message.channel.send('You need to be in a voice channel to use this feature.');
 
@@ -14,12 +15,15 @@ module.exports = {
         if (!permissions.has('CONNECT')) return message.channel.send('You dont have the permission to use this feature.');
         if (!permissions.has('SPEAK')) return message.channel.send('You dont have the permission to use this feature.');
 
+        //Queue structure that holds the songs inputted by the users
         const serverQueue = queue.get(message.guild.id);
 
+        //play and p are aliases to add song to the queue
         if (cmd === 'play' || cmd === 'p') {
             if (!args.length) return message.channel.send('Please input a video.');
             let song = {};
 
+            //checks for valid URL, then stores video info as song if valid
             if (ytdl.validateURL(args[0])) {
                 const songInfo = await ytdl.getInfo(args[0]);
                 song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
@@ -38,6 +42,7 @@ module.exports = {
                 }
             }
 
+            //Builds a queue for the serverqueue to use and joins channel
             if (!serverQueue) {
 
                 const queueConstructor = {
@@ -72,16 +77,18 @@ module.exports = {
     }
 }
 
+//This code actually plays the song using ytdl core
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
 
+    //Leave channel and remove queue if theres no more songs
     if (!song) {
         songQueue.voiceChannel.leave();
         queue.delete(guild.id);
         return;
     }
 
-    const stream = ytdl(song.url, { filter: 'audioonly', highWaterMark: 1<<25 });
+    const stream = ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 });
 
     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
         .on('finish', () => {
@@ -92,6 +99,7 @@ const videoPlayer = async (guild, song) => {
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
 }
 
+//Skip gets rid of top item in queue, stop wipes queue entirely
 const skipSong = (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a voice channel to use this feature.');
 

@@ -20,8 +20,6 @@ $stop - Completely clears the queue and forces the bot out of the voice channel
 
 $clear - This command deletes 100 messages from the channel that it is invoked in, use this feature ONLY to clean up a dedicated music text channel
 
-$restart - In the event of a crash, restarts the bot safely
-
 $help - Lists these commands in case you forget!
 
 

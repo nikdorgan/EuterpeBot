@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 module.exports = (Discord, bot, message) => {
+    //processess messages aimed at bot (i.e. ones that use the '$' prefix)
+
     const prefix = process.env.PREFIX;
 
     if (!message.content.startsWith(prefix) || message.author.bot) {
