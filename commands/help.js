@@ -11,7 +11,6 @@ module.exports = {
                 { name: '$skip', value: 'Stops playback of current song and moves to next one in the queue' },
                 { name: '$stop', value: 'Clears queue and forces bot out of the voice channel' },
                 { name: '$clear', value: 'Deletes 100 messages from the channel that it is invoked in, ONLY use to clean up dedicated music text channel' },
-                { name: '$restart', value: 'In the event of a crash, restarts the bot safely' }
             );
 
         message.channel.send(helpEmbed);
