@@ -81,7 +81,7 @@ const videoPlayer = async (guild, song) => {
         return;
     }
 
-    const stream = ytdl(song.url, { filter: 'audioonly' });
+    const stream = ytdl(song.url, { filter: 'audioonly', highWaterMark: 1<<25 });
 
     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
         .on('finish', () => {
