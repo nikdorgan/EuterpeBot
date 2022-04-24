@@ -58,7 +58,7 @@ module.exports = {
                     textChannel: message.channel,
                     connection: null,
                     songs: []
-                } 
+                }
 
                 queue.set(message.guild.id, queueConstructor);
                 queueConstructor.songs.push(song);
