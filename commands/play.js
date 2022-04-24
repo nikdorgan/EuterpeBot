@@ -1,5 +1,6 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
+const ytpl = require('ytpl');
 const queue = new Map();
 
 module.exports = {
@@ -20,14 +21,22 @@ module.exports = {
 
         //play and p are aliases to add song to the queue
         if (cmd === 'play' || cmd === 'p') {
+
             if (!args.length) return message.channel.send('Please input a video.');
             let song = {};
+            let playlist;
 
             //checks for valid URL, then stores video info as song if valid
             if (ytdl.validateURL(args[0])) {
                 const songInfo = await ytdl.getInfo(args[0]);
                 song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
+            } else if (ytpl.validateID(args[0])) {
+                playlist = await ytpl(args[0]);
+
+                const songInfo = await ytdl.getInfo(playlist.items[0].url);
+                song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
             } else {
+
                 const videoFinder = async (query) => {
                     const video_result = await ytSearch(query);
                     return (video_result.videos.length > 1) ? video_result.videos[0] : null;
@@ -42,6 +51,7 @@ module.exports = {
                 }
             }
 
+
             //Builds a queue for the serverqueue to use and joins channel
             if (!serverQueue) {
 
@@ -55,6 +65,15 @@ module.exports = {
                 queue.set(message.guild.id, queueConstructor);
                 queueConstructor.songs.push(song);
 
+                if (playlist) {
+                    playlist.items.forEach(async (i) => {
+                        const songInfo = await ytdl.getInfo(i.url);
+
+                        testSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
+                        queueConstructor.songs.push(testSong);
+                    })
+                }
+
                 try {
                     const connection = await voiceChannel.join();
                     queueConstructor.connection = connection;
@@ -67,8 +86,21 @@ module.exports = {
 
             } else {
                 serverQueue.songs.push(song);
+
+                if (playlist) {
+                    playlist.items.forEach(async (i) => {
+                        const songInfo = await ytdl.getInfo(i.url);
+
+                        testSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
+                        serverQueue.songs.push(testSong);
+                    })
+                }
+
                 return message.channel.send(`${song.title} added to queue.`);
             }
+
+
+
         }
 
         else if (cmd === 'skip') skipSong(message, serverQueue);
