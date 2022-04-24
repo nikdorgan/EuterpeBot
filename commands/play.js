@@ -24,7 +24,7 @@ module.exports = {
 
             if (!args.length) return message.channel.send('Please input a video.');
             let song = {};
-            let playlist;
+            let playlist; 
 
             //The if block checks if valid song URL, stores info as song to pass to queue if so
             //else if block checks if URL is actually a playlist, stores all playlist URLs if so and also passes first song to queue
