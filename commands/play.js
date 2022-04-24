@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['p', 'skip', 'stop'],
     description: 'The actual music feature',
     async execute(message, args, cmd, bot, Discord) {
-        //Checks to make sure user can actually use the bot
+        //Checks to make sure user is in a voice channel & has permissions
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return message.channel.send('You need to be in a voice channel to use this feature.');
 
@@ -26,17 +26,17 @@ module.exports = {
             let song = {};
             let playlist;
 
-            //checks for valid URL, then stores video info as song if valid
+            //The if block checks if valid song URL, stores info as song to pass to queue if so
+            //else if block checks if URL is actually a playlist, stores all playlist URLs if so and also passes first song to queue
+            //else block is for when user inputs video title instead of URL, searches title and stores first resulting song
             if (ytdl.validateURL(args[0])) {
                 const songInfo = await ytdl.getInfo(args[0]);
                 song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
             } else if (ytpl.validateID(args[0])) {
                 playlist = await ytpl(args[0]);
-
                 const songInfo = await ytdl.getInfo(playlist.items[0].url);
                 song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
             } else {
-
                 const videoFinder = async (query) => {
                     const video_result = await ytSearch(query);
                     return (video_result.videos.length > 1) ? video_result.videos[0] : null;
@@ -51,10 +51,8 @@ module.exports = {
                 }
             }
 
-
             //Builds a queue for the serverqueue to use and joins channel
             if (!serverQueue) {
-
                 const queueConstructor = {
                     voiceChannel: voiceChannel,
                     textChannel: message.channel,
@@ -65,6 +63,7 @@ module.exports = {
                 queue.set(message.guild.id, queueConstructor);
                 queueConstructor.songs.push(song);
 
+                //pushes playlist songs on queue then clears playlist
                 if (playlist) {
                     playlist.items.forEach(async (i) => {
                         const songInfo = await ytdl.getInfo(i.url);
@@ -72,6 +71,7 @@ module.exports = {
                         testSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
                         queueConstructor.songs.push(testSong);
                     })
+                    playlist = null;
                 }
 
                 try {
@@ -83,8 +83,8 @@ module.exports = {
                     message.channel.send('There was an error connecting.');
                     throw err;
                 }
-
             } else {
+                //if there is already a queue going, simply pushes song on it
                 serverQueue.songs.push(song);
 
                 if (playlist) {
@@ -94,18 +94,13 @@ module.exports = {
                         testSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
                         serverQueue.songs.push(testSong);
                     })
+                    playlist = null;
                 }
-
                 return message.channel.send(`${song.title} added to queue.`);
             }
-
-
-
         }
-
         else if (cmd === 'skip') skipSong(message, serverQueue);
         else if (cmd === 'stop') stopSong(message, serverQueue);
-
     }
 }
 
