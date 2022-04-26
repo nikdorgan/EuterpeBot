@@ -19,7 +19,7 @@ module.exports = {
 
         if (cmd === 'play' || cmd === 'p') {
 
-            if (!args.length) return message.channel.send("Please input a video with this command.");
+            if (!args.length) return message.channel.send("Please input a link or search query with this command.");
             let song = {};
             let playlist;
 
