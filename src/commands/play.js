@@ -90,7 +90,7 @@ module.exports = {
                         serverQueue.songs.push(playlistSong);
                     })
                     message.channel.send(`${playlist.title} added to queue.`);
-                    playlist = null;
+                    return playlist = null;
                 }
 
                 return message.channel.send(`${song.title} added to queue.`);
