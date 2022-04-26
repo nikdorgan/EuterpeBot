@@ -21,7 +21,7 @@ module.exports = {
 
             if (!args.length) return message.channel.send("Please input a video with this command.");
             let song = {};
-            let playlist = [];
+            let playlist;
 
             //The if block checks for valid video URL, stores video info as song to pass to the queue if so
             //The else-if block checks for valid playlist URL, stores all contained video URLs and passes first song info to queue
@@ -60,14 +60,14 @@ module.exports = {
                 queueConstructor.songs.push(song);
 
                 //pushes playlist songs on queue then clears playlist
-                if (playlist != []) {
+                if (playlist) {
                     playlist.items.forEach(async (i) => {
                         const songInfo = await ytdl.getInfo(i.url);
 
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
                         queueConstructor.songs.push(playlistSong);
                     })
-                    playlist = [];
+                    playlist = null;
                 }
 
                 try {
@@ -82,14 +82,15 @@ module.exports = {
             } else {
                 serverQueue.songs.push(song);
 
-                if (playlist != []) {
+                if (playlist) {
                     playlist.items.forEach(async (i) => {
                         const songInfo = await ytdl.getInfo(i.url);
 
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
                         serverQueue.songs.push(playlistSong);
                     })
-                    playlist = [];
+                    message.channel.send(`${playlist.title} added to queue.`);
+                    playlist = null;
                 }
 
                 return message.channel.send(`${song.title} added to queue.`);
@@ -128,6 +129,6 @@ const skipSong = (message, serverQueue) => {
 const stopSong = (message, serverQueue) => {
     if (!message.member.voice.channel) return message.channel.send("Please join a voice channel to use this command.");
     serverQueue.songs = [];
-    playlist = [];
+    playlist = null;
     serverQueue.connection.dispatcher.end();
 }
