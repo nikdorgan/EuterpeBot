@@ -6,7 +6,7 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle('Commands')
             .addFields(
-                { name: '$play (search or URL)', value: 'TEST Adds the song or playlist to the queue' },
+                { name: '$play (search or URL)', value: 'Adds the song or playlist to the queue' },
                 { name: '$p (search or URL)', value: 'Same as above, shorthand' },
                 { name: '$skip', value: 'Stops playback of current song and moves to next one in the queue' },
                 { name: '$stop', value: 'Clears queue and forces bot out of the voice channel' },
