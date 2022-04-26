@@ -101,7 +101,7 @@ module.exports = {
                     return playlist = null;
                 }
 
-                return message.channel.send(`${song.title} added to queue.`);
+                return message.channel.send(`**${song.title}** added to queue.`);
             }
         }
 
