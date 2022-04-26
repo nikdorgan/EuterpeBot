@@ -1,8 +1,7 @@
+//Reads commands from command folder
 const fs = require('fs');
 
 module.exports = (bot, Discord) => {
-    //Reads commands from command folder
-
     const commandFiles = fs.readdirSync('./src/commands/').filter(file => file.endsWith('.js'));
 
     for (const file of commandFiles) {
