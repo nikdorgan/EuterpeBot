@@ -23,6 +23,7 @@ module.exports = {
             let song = {};
             let playlist;
 
+
             //The if block checks for valid video URL, stores video info as song to pass to the queue if so
             //The else-if block checks for valid playlist URL, stores all contained video URLs and passes first song info to queue
             //The else block is for when user inputs video title instead of URL, searches title and uses first resulting song
@@ -47,6 +48,7 @@ module.exports = {
                     message.channel.send("There was an error trying to find this video.");
                 }
             }
+
 
             if (!serverQueue) {
                 const queueConstructor = {
@@ -102,6 +104,8 @@ module.exports = {
                 return message.channel.send(`${song.title} added to queue.`);
             }
         }
+
+
         else if (cmd === 'skip') skipSong(message, serverQueue);
         else if (cmd === 'stop') stopSong(message, serverQueue);
     }
