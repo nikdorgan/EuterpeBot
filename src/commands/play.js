@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'skip', 'stop'],
+    aliases: ['p', 'skip', 'stop', 'queue'],
     description: "The actual music feature",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -106,8 +106,28 @@ module.exports = {
         }
 
 
-        else if (cmd === 'skip') skipSong(message, serverQueue);
-        else if (cmd === 'stop') stopSong(message, serverQueue);
+        else if (cmd === 'queue') {
+            const songQueue = queue.get(message.guild.id);
+
+            if (!serverQueue) return;
+
+            const queueEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Queue')
+
+            let ctr = 0;
+            songQueue.songs.forEach((i) => {
+                ctr++;
+                queueEmbed.addFields(
+                    { name: 'Song ' + ctr + ': ', value: i.title },
+                );
+            })
+
+            message.channel.send(queueEmbed);
+        }
+
+        else if (cmd === 'skip') skipSong(serverQueue);
+        else if (cmd === 'stop') stopSong(serverQueue);
     }
 }
 
@@ -131,23 +151,13 @@ const videoPlayer = async (guild, song) => {
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
 }
 
-const skipSong = (message, serverQueue) => {
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.channel.send("Please join a voice channel to use this command.");
-    const permissions = voiceChannel.permissionsFor(message.client.user);
-    if (!permissions.has('CONNECT')) return message.channel.send("You do not have permission to use this command.");
-    if (!permissions.has('SPEAK')) return message.channel.send("You do not have permission to use this command.");
+const skipSong = (serverQueue) => {
     if (!serverQueue) return;
 
     serverQueue.connection.dispatcher.end();
 }
 
-const stopSong = (message, serverQueue) => {
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.channel.send("Please join a voice channel to use this command.");
-    const permissions = voiceChannel.permissionsFor(message.client.user);
-    if (!permissions.has('CONNECT')) return message.channel.send("You do not have permission to use this command.");
-    if (!permissions.has('SPEAK')) return message.channel.send("You do not have permission to use this command.");
+const stopSong = (serverQueue) => {
     if (!serverQueue) return;
 
     serverQueue.songs = [];
