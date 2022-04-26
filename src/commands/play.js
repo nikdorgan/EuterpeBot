@@ -137,6 +137,7 @@ const skipSong = (message, serverQueue) => {
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has('CONNECT')) return message.channel.send("You do not have permission to use this command.");
     if (!permissions.has('SPEAK')) return message.channel.send("You do not have permission to use this command.");
+    if(!serverQueue) return;
 
     serverQueue.connection.dispatcher.end();
 }
@@ -147,6 +148,7 @@ const stopSong = (message, serverQueue) => {
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has('CONNECT')) return message.channel.send("You do not have permission to use this command.");
     if (!permissions.has('SPEAK')) return message.channel.send("You do not have permission to use this command.");
+    if(!serverQueue) return;
 
     serverQueue.songs = [];
     playlist = null;
