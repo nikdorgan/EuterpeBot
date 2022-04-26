@@ -89,7 +89,7 @@ module.exports = {
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
                         serverQueue.songs.push(playlistSong);
                     })
-                    message.channel.send(`${playlist.title} added to queue.`);
+                    message.channel.send(`**${playlist.title}** added to queue.`);
                     return playlist = null;
                 }
 
