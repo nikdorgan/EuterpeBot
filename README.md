@@ -18,6 +18,8 @@ $skip - This stops playback of the current song and moves to the next one in the
 
 $stop - Completely clears the queue and forces the bot out of the voice channel
 
+$queue - Sends a list of the songs currently in the queue (up to 25)
+
 $clear - This command deletes 100 messages from the channel that it is invoked in, use this feature ONLY to clean up a dedicated music text channel or you might lose chat messages!
 
 $help - Lists these commands in case you forget
