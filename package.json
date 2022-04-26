@@ -2,11 +2,11 @@
   "name": "euterpebot",
   "version": "1.0.0",
   "description": "A music bot by Nik Dorgan",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node ./main.js",
-    "start": "node ./main.js"
+    "dev": "node ./src/main.js",
+    "start": "node ./src/main.js"
   },
   "author": "Nikolas Dorgan",
   "license": "ISC",
