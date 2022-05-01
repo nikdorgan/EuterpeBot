@@ -39,9 +39,7 @@ module.exports = {
                     const video_result = await ytSearch(query);
                     return (video_result.videos.length > 1) ? video_result.videos[0] : null;
                 }
-
                 const video = await videoFinder(args.join(' '));
-
                 if (video) {
                     song = { title: video.title, url: video.url }
                 } else {
