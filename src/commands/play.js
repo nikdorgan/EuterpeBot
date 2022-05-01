@@ -18,12 +18,12 @@ module.exports = {
         const serverQueue = queue.get(message.guild.id);
 
         if (cmd === 'play' || cmd === 'p') {
-
             if (!args.length) return message.channel.send("Please input a link or search query with this command.");
             let song = {};
             let playlist;
 
 
+            //Handles the video searching
             //The if block checks for valid video URL, stores video info as song to pass to the queue if so
             //The else-if block checks for valid playlist URL, stores all contained video URLs and passes first song info to queue
             //The else block is for when user inputs video title instead of URL, searches title and uses first resulting song
@@ -50,6 +50,7 @@ module.exports = {
             }
 
 
+            //Handles the queueing of the video(s) found above
             if (!serverQueue) {
                 const queueConstructor = {
                     voiceChannel: voiceChannel,
@@ -105,6 +106,7 @@ module.exports = {
             }
         }
 
+
         else if (cmd === 'queue' || cmd === 'q') queueSong(message, Discord, serverQueue);
         else if (cmd === 'nowplaying' || cmd === 'np') nowPlayingSong(message, serverQueue);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
@@ -113,6 +115,7 @@ module.exports = {
 }
 
 
+//Handles the actual playing of the video
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
 
