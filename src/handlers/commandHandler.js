@@ -1,4 +1,3 @@
-//Reads commands from command folder
 const fs = require('fs');
 
 module.exports = (bot, Discord) => {

@@ -24,7 +24,7 @@ $queue - Sends a list of the videos currently in the queue (up to 25)
 
 $clear - Remove 100 messages from the text channel.
 
-$help - Show bot commands in case you forget!
+$help - Show bot commands.
 
 
 CREDIT
