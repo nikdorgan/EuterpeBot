@@ -34,6 +34,7 @@ module.exports = {
                 playlist = await ytpl(args[0]);
                 const songInfo = await ytdl.getInfo(playlist.items[0].url);
                 song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
+                message.channel.send("Queueing playlist videos (this may take a moment)...");
             } else {
                 const videoFinder = async (query) => {
                     const video_result = await ytSearch(query);
@@ -61,7 +62,7 @@ module.exports = {
 
                 //pushes playlist songs on queue then clears playlist
                 if (playlist) {
-                    playlist.items.forEach(async (i) => {
+                    for(const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
 
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
@@ -69,7 +70,7 @@ module.exports = {
                         if (song.title !== playlistSong.title) {
                             queueConstructor.songs.push(playlistSong);
                         }
-                    })
+                    }
                     playlist = null;
                 }
                 try {
@@ -85,7 +86,7 @@ module.exports = {
                 serverQueue.songs.push(song);
 
                 if (playlist) {
-                    playlist.items.forEach(async (i) => {
+                    for(const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
 
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
@@ -93,7 +94,7 @@ module.exports = {
                         if (song.title !== playlistSong.title) {
                             serverQueue.songs.push(playlistSong);
                         }
-                    })
+                    }
                     message.channel.send(`**${playlist.title}** added to queue.`);
                     return playlist = null;
                 }
