@@ -1,4 +1,4 @@
-//Reads events from event handler
+//Reads events from event folder
 const fs = require('fs');
 
 module.exports = (bot, Discord) => {

@@ -10,19 +10,21 @@ This bot accepts both a search query or a URL, and scours YouTube to find the mo
 
 COMMANDS
 
-$play (search or URL) - This is the main command to use the music feature, this adds the video to the queue to be played when it has been reached, if the URL is a playlist it will add every video therein to the queue
+$play search/URL  ($p) - Add the video or playlist to the queue.
 
-$p (search or URL) - This command is the same as the one above, but shorthand for ease of use 
+$queue  ($q) - Display the queue of the current tracks (up to 25).
 
-$skip - This stops playback of the current video and moves to the next one in the queue
+$nowplaying  ($np) - Display the currently playing track.
 
-$stop - Completely clears the queue and forces the bot out of the voice channel
+$skip  ($s) - Remove the currently playing track from the queue.
+
+$stop  ($st) - Stop the player and clear the queue.
 
 $queue - Sends a list of the videos currently in the queue (up to 25)
 
-$clear - This command deletes 100 messages from the channel that it is invoked in, use this feature ONLY to clean up a dedicated music text channel or you might lose chat messages!
+$clear - Remove 100 messages from the text channel.
 
-$help - Lists these commands in case you forget
+$help - Show bot commands in case you forget!
 
 
 CREDIT
