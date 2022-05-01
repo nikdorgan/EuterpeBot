@@ -6,7 +6,7 @@ const queue = new Map();
 module.exports = {
     name: 'play',
     aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st'],
-    description: "Every command involving the player queue is here",
+    description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return message.channel.send("Please join a voice channel to use this command.");
