@@ -20,7 +20,9 @@ $skip  ($s) - Remove the currently playing track from the queue.
 
 $stop  ($st) - Stop the player and clear the queue.
 
-$queue - Sends a list of the videos currently in the queue (up to 25)
+$pause - Pause the player.
+
+$resume - Resume the player.
 
 $clear - Remove 100 messages from the text channel.
 

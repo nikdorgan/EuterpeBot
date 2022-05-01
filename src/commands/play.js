@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume'],
     description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -108,6 +108,8 @@ module.exports = {
         else if (cmd === 'nowplaying' || cmd === 'np') nowPlayingSong(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
+        else if (cmd === 'pause') pauseSong(serverQueue);
+        else if (cmd === 'resume') resumeSong(serverQueue);
     }
 }
 
@@ -166,6 +168,25 @@ const stopSong = (serverQueue) => {
         serverQueue.songs = [];
         playlist = null;
         serverQueue.connection.dispatcher.end();
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const pauseSong = (serverQueue) => {
+    try {
+        serverQueue.connection.dispatcher.pause(true);
+        serverQueue.connection.dispatcher.resume();
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const resumeSong = (serverQueue) => {
+    try {
+        serverQueue.connection.dispatcher.resume();
     }
     catch (err) {
         console.log(err);

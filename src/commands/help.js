@@ -11,6 +11,8 @@ module.exports = {
                 { name: '$nowplaying  ($np)', value: 'Display the currently playing track.' },
                 { name: '$skip  ($s)', value: 'Remove the currently playing track from the queue.' },
                 { name: '$stop  ($st)', value: 'Stop the player and clear the queue.' },
+                { name: '$pause', value: 'Pause the player.' },
+                { name: '$resume', value: 'Resume the player.' },
                 { name: '$clear', value: 'Remove 100 messages from the text channel.' },
             );
 
