@@ -103,8 +103,8 @@ module.exports = {
         }
 
 
-        else if (cmd === 'queue' || cmd === 'q') queueSong(message, Discord, serverQueue);
-        else if (cmd === 'nowplaying' || cmd === 'np') nowPlayingSong(message, serverQueue);
+        else if (cmd === 'queue' || cmd === 'q') queueSong(serverQueue, message, Discord);
+        else if (cmd === 'nowplaying' || cmd === 'np') nowPlayingSong(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
     }
