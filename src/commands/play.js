@@ -62,7 +62,7 @@ module.exports = {
 
                 //pushes playlist songs on queue then clears playlist
                 if (playlist) {
-                    for(const i of playlist.items) {
+                    for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
 
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
@@ -86,7 +86,7 @@ module.exports = {
                 serverQueue.songs.push(song);
 
                 if (playlist) {
-                    for(const i of playlist.items) {
+                    for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
 
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
@@ -153,13 +153,21 @@ const nowPlayingSong = (serverQueue, message) => {
 }
 
 const skipSong = (serverQueue) => {
-    if (!serverQueue) return;
-    serverQueue.connection.dispatcher.end();
+    try {
+        serverQueue.connection.dispatcher.end();
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 
 const stopSong = (serverQueue) => {
-    if (!serverQueue) return;
-    serverQueue.songs = [];
-    playlist = null;
-    serverQueue.connection.dispatcher.end();
+    try {
+        serverQueue.songs = [];
+        playlist = null;
+        serverQueue.connection.dispatcher.end();
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
