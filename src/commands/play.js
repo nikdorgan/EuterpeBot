@@ -186,6 +186,7 @@ const pauseSong = (serverQueue) => {
 
 const resumeSong = (serverQueue) => {
     try {
+        serverQueue.connection.dispatcher.pause(true);
         serverQueue.connection.dispatcher.resume();
     }
     catch (err) {
