@@ -56,7 +56,6 @@ module.exports = {
                     connection: null,
                     songs: []
                 }
-
                 queue.set(message.guild.id, queueConstructor);
                 queueConstructor.songs.push(song);
 
@@ -73,7 +72,6 @@ module.exports = {
                     })
                     playlist = null;
                 }
-
                 try {
                     const connection = await voiceChannel.join();
                     queueConstructor.connection = connection;
