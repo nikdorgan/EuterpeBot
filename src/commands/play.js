@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'skip', 'stop', 'queue', 'q'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's' , 'stop', 'st'],
     description: "The actual music feature",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -105,9 +105,10 @@ module.exports = {
             }
         }
 
-        else if (cmd === 'skip') skipSong(serverQueue);
-        else if (cmd === 'stop') stopSong(serverQueue);
         else if (cmd === 'queue' || cmd === 'q') queueSong(message, Discord, serverQueue);
+        else if (cmd === 'nowplaying' || cmd === 'np') nowPlayingSong(message, serverQueue);
+        else if (cmd === 'skip'  || cmd === 's') skipSong(serverQueue);
+        else if (cmd === 'stop'  || cmd === 'st') stopSong(serverQueue);
     }
 }
 
@@ -133,31 +134,12 @@ const videoPlayer = async (guild, song) => {
 }
 
 
-const skipSong = (serverQueue) => {
-    if (!serverQueue) return;
-
-    serverQueue.connection.dispatcher.end();
-}
-
-
-const stopSong = (serverQueue) => {
-    if (!serverQueue) return;
-
-    serverQueue.songs = [];
-    playlist = null;
-    serverQueue.connection.dispatcher.end();
-}
-
-
 const queueSong = (message, Discord, serverQueue) => {
-    const songQueue = queue.get(message.guild.id);
-
     if (!serverQueue) return;
-
+    const songQueue = queue.get(message.guild.id);
     const queueEmbed = new Discord.MessageEmbed()
         .setColor('#0099ff')
         .setTitle('Queue')
-
     let ctr = 0;
     songQueue.songs.forEach((i) => {
         ctr++;
@@ -165,6 +147,26 @@ const queueSong = (message, Discord, serverQueue) => {
             { name: 'Song ' + ctr + ': ', value: i.title },
         );
     })
-
     message.channel.send(queueEmbed);
+}
+
+
+const nowPlayingSong = (message, serverQueue) => {
+    if (!serverQueue) return;
+    const songQueue = queue.get(message.guild.id);
+    message.channel.send(`Now Playing: **${songQueue.songs[0].title}**`)
+}
+
+
+const skipSong = (serverQueue) => {
+    if (!serverQueue) return;
+    serverQueue.connection.dispatcher.end();
+}
+
+
+const stopSong = (serverQueue) => {
+    if (!serverQueue) return;
+    serverQueue.songs = [];
+    playlist = null;
+    serverQueue.connection.dispatcher.end();
 }
