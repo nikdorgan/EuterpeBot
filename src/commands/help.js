@@ -6,12 +6,12 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle('Commands')
             .addFields(
-                { name: '$play (search or URL)', value: 'Adds the video or playlist to the queue' },
-                { name: '$p (search or URL)', value: 'Same as above, shorthand' },
-                { name: '$skip', value: 'Stops playback of current video and moves to next one in the queue' },
-                { name: '$stop', value: 'Clears queue and forces bot out of the voice channel' },
-                { name: '$queue', value: 'Lists videos currently in the queue (up to 25)' },
-                { name: '$clear', value: 'Deletes 100 messages from the channel that it is invoked in' },
+                { name: '$play search/URL  ($p)', value: 'Add the video or playlist to the queue.' },
+                { name: '$queue  ($q)', value: 'Display the queue of the current tracks (up to 25).' },
+                { name: '$nowplaying  ($np)', value: 'Display the currently playing track.' },
+                { name: '$skip  ($s)', value: 'Remove the currently playing track from the queue.' },
+                { name: '$stop  ($st)', value: 'Stop the player and clear the queue.' },
+                { name: '$clear', value: 'Remove 100 messages from the text channel.' },
             );
 
         message.channel.send(helpEmbed);
