@@ -112,30 +112,26 @@ module.exports = {
     }
 }
 
-
 //Handles the actual playing of the video
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
-
     if (!song) {
         songQueue.voiceChannel.leave();
         queue.delete(guild.id);
         return;
     }
-
     const stream = ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 });
-
     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
         .on('finish', () => {
             songQueue.songs.shift();
             videoPlayer(guild, songQueue.songs[0]);
         });
-
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
 }
 
 
-const queueSong = (message, Discord, serverQueue) => {
+//Other commands that use the server queue
+const queueSong = (serverQueue, message, Discord) => {
     if (!serverQueue) return;
     const songQueue = queue.get(message.guild.id);
     const queueEmbed = new Discord.MessageEmbed()
@@ -151,19 +147,16 @@ const queueSong = (message, Discord, serverQueue) => {
     message.channel.send(queueEmbed);
 }
 
-
-const nowPlayingSong = (message, serverQueue) => {
+const nowPlayingSong = (serverQueue, message) => {
     if (!serverQueue) return;
     const songQueue = queue.get(message.guild.id);
     message.channel.send(`Now Playing: **${songQueue.songs[0].title}**`)
 }
 
-
 const skipSong = (serverQueue) => {
     if (!serverQueue) return;
     serverQueue.connection.dispatcher.end();
 }
-
 
 const stopSong = (serverQueue) => {
     if (!serverQueue) return;
