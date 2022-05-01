@@ -5,8 +5,8 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's' , 'stop', 'st'],
-    description: "The actual music feature",
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st'],
+    description: "Every command involving the main queue is here",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel) return message.channel.send("Please join a voice channel to use this command.");
@@ -107,8 +107,8 @@ module.exports = {
 
         else if (cmd === 'queue' || cmd === 'q') queueSong(message, Discord, serverQueue);
         else if (cmd === 'nowplaying' || cmd === 'np') nowPlayingSong(message, serverQueue);
-        else if (cmd === 'skip'  || cmd === 's') skipSong(serverQueue);
-        else if (cmd === 'stop'  || cmd === 'st') stopSong(serverQueue);
+        else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
+        else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
     }
 }
 
