@@ -24,6 +24,8 @@ $pause - Pause the player.
 
 $resume - Resume the player.
 
+$repeat  ($rep) - Change to repeat mode.
+
 $clear - Remove 100 messages from the text channel.
 
 $help - Show bot commands.
