@@ -106,7 +106,7 @@ module.exports = {
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
-        else if (cmd === 'repeat' || cmd === 'rep') repeatSong(serverQueue, message);
+        else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
     }
 }
 
@@ -187,7 +187,7 @@ const togglePause = (serverQueue) => {
     }
 }
 
-const repeatSong = (serverQueue, message) => {
+const toggleRepeat = (serverQueue, message) => {
     try {
         if (serverQueue.loop === false) {
             serverQueue.loop = true;
