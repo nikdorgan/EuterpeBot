@@ -81,7 +81,7 @@ module.exports = {
                 } catch (err) {
                     queue.delete(message.guild.id);
                     message.channel.send("There was an error trying to connect to the voice channel.");
-                    throw err;
+                    console.log(err);
                 }
             } else {
                 serverQueue.songs.push(song);
