@@ -177,7 +177,6 @@ const skipSong = (serverQueue) => {
 const stopSong = (serverQueue) => {
     try {
         serverQueue.songs = [];
-        playlist = null;
         serverQueue.connection.dispatcher.end();
     }
     catch (err) {
