@@ -65,23 +65,21 @@ module.exports = {
                 if (playlist) {
                     for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
-
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
-
                         if (song.title !== playlistSong.title) {
                             queueConstructor.songs.push(playlistSong);
                         }
                     }
                     playlist = null;
                 }
+
                 try {
                     const connection = await voiceChannel.join();
                     queueConstructor.connection = connection;
                     videoPlayer(message.guild, queueConstructor.songs[0]);
                 } catch (err) {
                     queue.delete(message.guild.id);
-                    message.channel.send("There was an error trying to connect to the voice channel.");
-                    console.log(err);
+                    return message.channel.send("There was an error trying to connect to the voice channel.");
                 }
             } else {
                 serverQueue.songs.push(song);
@@ -89,9 +87,7 @@ module.exports = {
                 if (playlist) {
                     for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
-
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
-
                         if (song.title !== playlistSong.title) {
                             serverQueue.songs.push(playlistSong);
                         }
