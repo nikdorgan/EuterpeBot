@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume', 'repeat'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep'],
     description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -111,7 +111,7 @@ module.exports = {
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
         else if (cmd === 'pause') pauseSong(serverQueue);
         else if (cmd === 'resume') resumeSong(serverQueue);
-        else if (cmd === 'repeat') repeatSong(serverQueue, message);
+        else if (cmd === 'repeat' || 'rep') repeatSong(serverQueue, message);
     }
 }
 
