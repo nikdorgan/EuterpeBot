@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume', 'repeat'],
     description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -55,6 +55,7 @@ module.exports = {
                     voiceChannel: voiceChannel,
                     textChannel: message.channel,
                     connection: null,
+                    loop: 0,
                     songs: []
                 }
                 queue.set(message.guild.id, queueConstructor);
@@ -110,6 +111,7 @@ module.exports = {
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
         else if (cmd === 'pause') pauseSong(serverQueue);
         else if (cmd === 'resume') resumeSong(serverQueue);
+        else if (cmd === 'repeat') repeatSong(serverQueue, message);
     }
 }
 
@@ -124,7 +126,8 @@ const videoPlayer = async (guild, song) => {
     const stream = ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 });
     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
         .on('finish', () => {
-            songQueue.songs.shift();
+            if (songQueue.loop === 0) songQueue.songs.shift();
+
             videoPlayer(guild, songQueue.songs[0]);
         });
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
@@ -133,25 +136,33 @@ const videoPlayer = async (guild, song) => {
 
 //Other commands that use the server queue
 const queueSong = (serverQueue, message, Discord) => {
-    if (!serverQueue) return;
-    const songQueue = queue.get(message.guild.id);
-    const queueEmbed = new Discord.MessageEmbed()
-        .setColor('#0099ff')
-        .setTitle('Queue')
-    let ctr = 0;
-    songQueue.songs.forEach((i) => {
-        ctr++;
-        queueEmbed.addFields(
-            { name: 'Song ' + ctr + ': ', value: i.title },
-        );
-    })
-    message.channel.send(queueEmbed);
+    try {
+        const songQueue = queue.get(message.guild.id);
+        const queueEmbed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Queue')
+        let ctr = 0;
+        songQueue.songs.forEach((i) => {
+            ctr++;
+            queueEmbed.addFields(
+                { name: 'Song ' + ctr + ': ', value: i.title },
+            );
+        })
+        message.channel.send(queueEmbed);
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 
 const nowPlayingSong = (serverQueue, message) => {
-    if (!serverQueue) return;
-    const songQueue = queue.get(message.guild.id);
-    message.channel.send(`Now Playing: **${songQueue.songs[0].title}**`)
+    try {
+        const songQueue = queue.get(message.guild.id);
+        message.channel.send(`Now Playing: **${songQueue.songs[0].title}**`)
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
 
 const skipSong = (serverQueue) => {
@@ -188,6 +199,21 @@ const resumeSong = (serverQueue) => {
     try {
         serverQueue.connection.dispatcher.pause(true);
         serverQueue.connection.dispatcher.resume();
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const repeatSong = (serverQueue, message) => {
+    try {
+        if (serverQueue.loop === 0) {
+            serverQueue.loop = 1;
+            message.channel.send(`Now Looping: **${serverQueue.songs[0].title}**`);
+        } else {
+            serverQueue.loop = 0;
+            message.channel.send(`Unlooping: **${serverQueue.songs[0].title}**`);
+        }
     }
     catch (err) {
         console.log(err);
