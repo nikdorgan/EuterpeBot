@@ -105,7 +105,7 @@ module.exports = {
         }
 
 
-        else if (cmd === 'queue' || cmd === 'q') queueSong(serverQueue, message, Discord);
+        else if (cmd === 'queue' || cmd === 'q') displayQueue(serverQueue, message, Discord);
         else if (cmd === 'nowplaying' || cmd === 'np') currentSong(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
@@ -134,7 +134,7 @@ const videoPlayer = async (guild, song) => {
 
 
 //Other commands that use the server queue
-const queueSong = (serverQueue, message, Discord) => {
+const displayQueue = (serverQueue, message, Discord) => {
     try {
         const queueEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
