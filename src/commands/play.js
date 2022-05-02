@@ -111,7 +111,7 @@ module.exports = {
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
         else if (cmd === 'pause') pauseSong(serverQueue);
         else if (cmd === 'resume') resumeSong(serverQueue);
-        else if (cmd === 'repeat' || 'rep') repeatSong(serverQueue, message);
+        else if (cmd === 'repeat' || cmd === 'rep') repeatSong(serverQueue, message);
     }
 }
 
