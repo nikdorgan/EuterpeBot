@@ -44,7 +44,7 @@ module.exports = {
                 if (video) {
                     song = { title: video.title, url: video.url }
                 } else {
-                    message.channel.send("There was an error trying to find this video.");
+                    return message.channel.send("There was an error trying to find this video.");
                 }
             }
 
