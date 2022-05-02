@@ -106,7 +106,7 @@ module.exports = {
 
 
         else if (cmd === 'queue' || cmd === 'q') queueSong(serverQueue, message, Discord);
-        else if (cmd === 'nowplaying' || cmd === 'np') nowPlayingSong(serverQueue, message);
+        else if (cmd === 'nowplaying' || cmd === 'np') currentSong(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
         else if (cmd === 'stop' || cmd === 'st') stopSong(serverQueue);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
@@ -153,7 +153,7 @@ const queueSong = (serverQueue, message, Discord) => {
     }
 }
 
-const nowPlayingSong = (serverQueue, message) => {
+const currentSong = (serverQueue, message) => {
     try {
         message.channel.send(`Currently Playing: **${serverQueue.songs[0].title}**`)
     }
