@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'leave', 'lv'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'leave', 'lv', 'repeat', 'rep'],
     description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
