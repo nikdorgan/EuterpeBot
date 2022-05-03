@@ -104,7 +104,7 @@ module.exports = {
         else if (cmd === 'queue' || cmd === 'q') displayQueue(serverQueue, message, Discord);
         else if (cmd === 'nowplaying' || cmd === 'np') currentSong(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
-        else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'l') stopSong(serverQueue);
+        else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'l') stopSong(serverQueue, voiceChannel);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
     }
@@ -144,37 +144,26 @@ const displayQueue = (serverQueue, message, Discord) => {
         })
         message.channel.send(queueEmbed);
     }
-    catch (err) {
-        console.log(err);
-    }
+    catch (err) { console.log(err); }
 }
 
 const currentSong = (serverQueue, message) => {
-    try {
-        message.channel.send(`Currently Playing: **${serverQueue.songs[0].title}**`)
-    }
-    catch (err) {
-        console.log(err);
-    }
+    try { message.channel.send(`Currently Playing: **${serverQueue.songs[0].title}**`) }
+    catch (err) { console.log(err); }
 }
 
 const skipSong = (serverQueue) => {
-    try {
-        serverQueue.connection.dispatcher.end();
-    }
-    catch (err) {
-        console.log(err);
-    }
+    try { serverQueue.connection.dispatcher.end(); }
+    catch (err) { console.log(err); }
 }
 
-const stopSong = (serverQueue) => {
-    try {
-        serverQueue.songs = [];
-        serverQueue.connection.dispatcher.end();
-    }
-    catch (err) {
-        console.log(err);
-    }
+const stopSong = (serverQueue, voiceChannel) => {
+    try { serverQueue.songs = []; }
+    catch (err) { console.log(err); }
+    try { serverQueue.connection.dispatcher.end(); }
+    catch (err) { console.log(err); }
+    try { voiceChannel.leave(); }
+    catch (err) { console.log(err); }
 }
 
 const togglePause = (serverQueue) => {
@@ -182,9 +171,7 @@ const togglePause = (serverQueue) => {
         serverQueue.connection.dispatcher.pause(true);
         serverQueue.connection.dispatcher.resume();
     }
-    catch (err) {
-        console.log(err);
-    }
+    catch (err) { console.log(err); }
 }
 
 const toggleRepeat = (serverQueue, message) => {
@@ -197,7 +184,5 @@ const toggleRepeat = (serverQueue, message) => {
             message.channel.send(`Unlooping: **${serverQueue.songs[0].title}**`);
         }
     }
-    catch (err) {
-        console.log(err);
-    }
+    catch (err) { console.log(err); }
 }
