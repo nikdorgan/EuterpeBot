@@ -20,6 +20,8 @@ $nowplaying  ($np) - Display the currently playing track.
 
 $skip  ($s) - Remove the currently playing track from the queue.
 
+$voteskip  ($v) - Vote to skip the current track. Must have at least 50% of the votes.
+
 $stop  ($st) - Stop the player and clear the queue.
 
 $pause - Pause the player.

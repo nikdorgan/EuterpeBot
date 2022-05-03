@@ -11,6 +11,7 @@ module.exports = {
                 { name: '$queue  ($q)', value: 'Display the queue of the current tracks (up to 25).' },
                 { name: '$nowplaying  ($np)', value: 'Display the currently playing track.' },
                 { name: '$skip  ($s)', value: 'Remove the currently playing track from the queue.' },
+                { name: '$voteskip  ($v)', value: 'Vote to skip the current track. Must have at least 50% of the votes.' },
                 { name: '$stop  ($st)', value: 'Stop the player and clear the queue.' },
                 { name: '$pause', value: 'Pause the player.' },
                 { name: '$resume', value: 'Resume the player.' },
