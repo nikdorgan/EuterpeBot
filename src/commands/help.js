@@ -19,7 +19,6 @@ module.exports = {
                 { name: '$leave  ($lv)', value: 'Make EuterpeBot leave the current voice channel.' },
                 { name: '$repeat  ($rep)', value: 'Toggles repeat mode.' },
                 { name: '$restart', value: 'Restart the currently playing track.' },
-                { name: '$clear', value: 'Remove 100 messages from the text channel.' },
             );
 
         message.channel.send(helpEmbed);

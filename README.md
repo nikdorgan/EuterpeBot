@@ -35,8 +35,6 @@ $repeat  ($rep) - Change to repeat mode.
 
 $restart - Restart the currently playing track.
 
-$clear - Remove 100 messages from the text channel.
-
 $help - Show bot commands.
 
 
