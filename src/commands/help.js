@@ -13,6 +13,7 @@ module.exports = {
                 { name: '$stop  ($st)', value: 'Stop the player and clear the queue.' },
                 { name: '$pause', value: 'Pause the player.' },
                 { name: '$resume', value: 'Resume the player.' },
+                { name: '$join  ($j)', value: 'Make EuterpeBot join your current voice channel.' },
                 { name: '$repeat  ($rep)', value: 'Toggles repeat mode.' },
                 { name: '$clear', value: 'Remove 100 messages from the text channel.' },
             );
