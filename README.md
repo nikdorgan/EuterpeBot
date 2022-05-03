@@ -10,7 +10,9 @@ This bot accepts both a search query or a URL, and scours YouTube to find the mo
 
 COMMANDS
 
-$play URL/search  ($p) - Add the video or playlist to the queue.
+$play URL  ($p) - Play music from the given URL.
+
+$play words  ($p) - Search for a track on YouTube.
 
 $queue  ($q) - Display the queue of the current tracks (up to 25).
 

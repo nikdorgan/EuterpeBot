@@ -6,7 +6,8 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle('Commands')
             .addFields(
-                { name: '$play URL/search  ($p)', value: 'Add the video or playlist to the queue.' },
+                { name: '$play URL  ($p)', value: 'Play music from the given URL.' },
+                { name: '$play words  ($p)', value: 'Search for a track on YouTube.' },
                 { name: '$queue  ($q)', value: 'Display the queue of the current tracks (up to 25).' },
                 { name: '$nowplaying  ($np)', value: 'Display the currently playing track.' },
                 { name: '$skip  ($s)', value: 'Remove the currently playing track from the queue.' },
