@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'leave', 'lv', 'repeat', 'rep'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'leave', 'lv', 'repeat', 'rep', 'restart'],
     description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -109,6 +109,7 @@ module.exports = {
         else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') stopSong(serverQueue, voiceChannel);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
+        else if (cmd === 'restart') restartSong(serverQueue, message);
     }
 }
 
@@ -201,6 +202,13 @@ const toggleRepeat = (serverQueue, message) => {
             serverQueue.loop = false;
             message.channel.send(`Unlooping: **${serverQueue.songs[0].title}**`);
         }
+    }
+    catch (err) { console.log(err); }
+}
+
+const restartSong = (serverQueue, message) => {
+    try {
+        videoPlayer(message.guild, serverQueue.songs[0]);
     }
     catch (err) { console.log(err); }
 }

@@ -34,6 +34,8 @@ $leave  ($lv) - Make EuterpeBot leave the current voice channel.
 
 $repeat  ($rep) - Change to repeat mode.
 
+$restart - Restart the currently playing track.
+
 $clear - Remove 100 messages from the text channel.
 
 $help - Show bot commands.
