@@ -14,6 +14,7 @@ module.exports = {
                 { name: '$pause', value: 'Pause the player.' },
                 { name: '$resume', value: 'Resume the player.' },
                 { name: '$join  ($j)', value: 'Make EuterpeBot join your current voice channel.' },
+                { name: '$leave  ($lv)', value: 'Make EuterpeBot leave the current voice channel.' },
                 { name: '$repeat  ($rep)', value: 'Toggles repeat mode.' },
                 { name: '$clear', value: 'Remove 100 messages from the text channel.' },
             );

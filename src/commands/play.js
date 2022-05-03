@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'leave', 'l'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'leave', 'lv'],
     description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -104,7 +104,7 @@ module.exports = {
         else if (cmd === 'queue' || cmd === 'q') displayQueue(serverQueue, message, Discord);
         else if (cmd === 'nowplaying' || cmd === 'np') currentSong(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
-        else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'l') stopSong(serverQueue, voiceChannel);
+        else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') stopSong(serverQueue, voiceChannel);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
     }

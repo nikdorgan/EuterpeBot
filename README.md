@@ -26,6 +26,8 @@ $resume - Resume the player.
 
 $join  ($j) - Make EuterpeBot join your current voice channel.
 
+$leave  ($lv) - Make EuterpeBot leave the current voice channel.
+
 $repeat  ($rep) - Change to repeat mode.
 
 $clear - Remove 100 messages from the text channel.
