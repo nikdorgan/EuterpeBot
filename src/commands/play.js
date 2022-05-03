@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'leave', 'lv'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'leave', 'lv'],
     description: "Every command involving the player queue is here.",
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -56,6 +56,7 @@ module.exports = {
                     textChannel: message.channel,
                     connection: null,
                     loop: false,
+                    votes: 0,
                     songs: []
                 }
                 queue.set(message.guild.id, queueConstructor);
@@ -104,6 +105,7 @@ module.exports = {
         else if (cmd === 'queue' || cmd === 'q') displayQueue(serverQueue, message, Discord);
         else if (cmd === 'nowplaying' || cmd === 'np') currentSong(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
+        else if (cmd === 'voteskip' || cmd === 'v') voteSkip(serverQueue, voiceChannel, message);
         else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') stopSong(serverQueue, voiceChannel);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
@@ -122,7 +124,7 @@ const videoPlayer = async (guild, song) => {
     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
         .on('finish', () => {
             if (songQueue.loop === false) songQueue.songs.shift();
-
+            songQueue.votes = 0;
             videoPlayer(guild, songQueue.songs[0]);
         });
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
@@ -154,6 +156,20 @@ const currentSong = (serverQueue, message) => {
 
 const skipSong = (serverQueue) => {
     try { serverQueue.connection.dispatcher.end(); }
+    catch (err) { console.log(err); }
+}
+
+const voteSkip = (serverQueue, voiceChannel, message) => {
+    try {
+        serverQueue.votes++;
+        message.channel.send(`Votes To Skip: **${serverQueue.votes} / ${voiceChannel.members.size - 1}** `)
+
+        if (serverQueue.votes > (voiceChannel.members.size - 1) / 2) {
+            serverQueue.votes = 0;
+            serverQueue.connection.dispatcher.end();
+            message.channel.send(`Skipping...`);
+        }
+    }
     catch (err) { console.log(err); }
 }
 
