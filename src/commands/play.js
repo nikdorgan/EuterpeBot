@@ -158,9 +158,10 @@ const skipSong = (serverQueue) => {
 }
 
 const stopSong = (serverQueue, voiceChannel) => {
-    try { serverQueue.songs = []; }
-    catch (err) { console.log(err); }
-    try { serverQueue.connection.dispatcher.end(); }
+    try {
+        serverQueue.songs = [];
+        serverQueue.connection.dispatcher.end();
+    }
     catch (err) { console.log(err); }
     try { voiceChannel.leave(); }
     catch (err) { console.log(err); }
