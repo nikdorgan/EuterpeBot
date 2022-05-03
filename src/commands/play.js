@@ -92,8 +92,8 @@ module.exports = {
                             serverQueue.songs.push(playlistSong);
                         }
                     }
-                    playlist = null;
-                    return message.channel.send(`**${playlist.title}** added to queue.`);
+                    message.channel.send(`**${playlist.title}** added to queue.`);
+                    return playlist = null;
                 }
 
                 return message.channel.send(`**${song.title}** added to queue.`);
@@ -135,7 +135,6 @@ const videoPlayer = async (guild, song) => {
 const displayQueue = (serverQueue, message, Discord) => {
     try {
         const queueEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
             .setTitle('Queue')
         let ctr = 0;
         serverQueue.songs.forEach((i) => {
@@ -206,8 +205,6 @@ const toggleRepeat = (serverQueue, message) => {
 }
 
 const restartSong = (serverQueue, message) => {
-    try {
-        videoPlayer(message.guild, serverQueue.songs[0]);
-    }
+    try { videoPlayer(message.guild, serverQueue.songs[0]); }
     catch (err) { console.log(err); }
 }
