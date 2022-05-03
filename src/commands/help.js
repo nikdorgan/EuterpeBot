@@ -3,7 +3,6 @@ module.exports = {
     description: "Show bot commands.",
     execute(message, args, cmd, bot, Discord) {
         const helpEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
             .setTitle('Commands')
             .addFields(
                 { name: '$play URL  ($p)', value: 'Add video or playlist from the given URL to the queue.' },

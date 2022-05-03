@@ -12,7 +12,6 @@ module.exports = {
         if (!voiceChannel) return message.channel.send("Please join a voice channel to use this command.");
 
         const permissions = voiceChannel.permissionsFor(message.client.user);
-        if (!permissions.has('CONNECT')) return message.channel.send("You do not have permission to use this command.");
         if (!permissions.has('SPEAK')) return message.channel.send("You do not have permission to use this command.");
 
         const serverQueue = queue.get(message.guild.id);
