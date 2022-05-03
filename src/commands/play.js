@@ -162,9 +162,7 @@ const stopSong = (serverQueue, voiceChannel) => {
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
     }
-    catch (err) { console.log(err); }
-    try { voiceChannel.leave(); }
-    catch (err) { console.log(err); }
+    catch (err) { voiceChannel.leave(); console.log(err); }
 }
 
 const togglePause = (serverQueue) => {
