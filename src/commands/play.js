@@ -4,9 +4,10 @@ const ytSearch = require('yt-search');
 const queue = new Map();
 
 const nowplaying = require('./nowplaying.js');
-const displayQueue = require('./displayqueue.js');
+const displayQueue = require('./queue.js');
 const skip = require('./skip.js');
 const voteSkip = require('./voteskip.js');
+const stop = require('./stop.js');
 
 module.exports = {
     name: 'play',
@@ -110,7 +111,7 @@ module.exports = {
         else if (cmd === 'nowplaying' || cmd === 'np') return nowplaying.execute(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') return skip.execute(serverQueue);
         else if (cmd === 'voteskip' || cmd === 'v') return voteSkip.execute(serverQueue, voiceChannel, message);
-        else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') stopSong(serverQueue, voiceChannel);
+        else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') return stop.execute(serverQueue, voiceChannel);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
         else if (cmd === 'restart') restartSong(serverQueue, message);
@@ -133,17 +134,6 @@ const videoPlayer = async (guild, song) => {
             videoPlayer(guild, songQueue.songs[0]);
         });
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
-}
-
-const stopSong = (serverQueue, voiceChannel) => {
-    try {
-        serverQueue.songs = [];
-        serverQueue.connection.dispatcher.end();
-    }
-    catch (err) {
-        voiceChannel.leave();
-        console.log(err);
-    }
 }
 
 const togglePause = (serverQueue) => {
