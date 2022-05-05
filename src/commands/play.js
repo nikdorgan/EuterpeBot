@@ -3,11 +3,14 @@ const ytpl = require('ytpl');
 const ytSearch = require('yt-search');
 const queue = new Map();
 
-const nowplaying = require('./nowplaying.js');
-const displayQueue = require('./queue.js');
-const skip = require('./skip.js');
-const voteSkip = require('./voteskip.js');
-const stop = require('./stop.js');
+const nowplaying = require('./nowplaying');
+const displayQueue = require('./queue');
+const skip = require('./skip');
+const voteSkip = require('./voteskip');
+const stop = require('./stop');
+const togglePause = require('./togglepause');
+const toggleRepeat = require('./togglerepeat');
+const restart = require('./restart');
 
 module.exports = {
     name: 'play',
@@ -112,9 +115,9 @@ module.exports = {
         else if (cmd === 'skip' || cmd === 's') return skip.execute(serverQueue);
         else if (cmd === 'voteskip' || cmd === 'v') return voteSkip.execute(serverQueue, voiceChannel, message);
         else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') return stop.execute(serverQueue, voiceChannel);
-        else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
-        else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
-        else if (cmd === 'restart') restartSong(serverQueue, message);
+        else if (cmd === 'pause' || cmd === 'resume') return togglePause.execute(serverQueue);
+        else if (cmd === 'repeat' || cmd === 'rep') return toggleRepeat.execute(serverQueue, message);
+        else if (cmd === 'restart') return restart.execute(videoPlayer, serverQueue, message);
     }
 }
 
@@ -134,30 +137,4 @@ const videoPlayer = async (guild, song) => {
             videoPlayer(guild, songQueue.songs[0]);
         });
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
-}
-
-const togglePause = (serverQueue) => {
-    try {
-        serverQueue.connection.dispatcher.pause(true);
-        serverQueue.connection.dispatcher.resume();
-    }
-    catch (err) { console.log(err); }
-}
-
-const toggleRepeat = (serverQueue, message) => {
-    try {
-        if (serverQueue.loop === false) {
-            serverQueue.loop = true;
-            message.channel.send(`Now Looping: **${serverQueue.songs[0].title}**`);
-        } else {
-            serverQueue.loop = false;
-            message.channel.send(`Unlooping: **${serverQueue.songs[0].title}**`);
-        }
-    }
-    catch (err) { console.log(err); }
-}
-
-const restartSong = (serverQueue, message) => {
-    try { videoPlayer(message.guild, serverQueue.songs[0]); }
-    catch (err) { console.log(err); }
 }
