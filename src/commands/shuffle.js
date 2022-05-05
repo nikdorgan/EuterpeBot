@@ -11,12 +11,10 @@ module.exports = {
 
 const shuffle = (serverQueue) => {
     let currentIndex = serverQueue.songs.length;
-    let newIndex;
-    let temp;
+    let newIndex, temp;
 
-    while (currentIndex !== 0) {
-        newIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
+    while (currentIndex) {
+        newIndex = Math.floor(Math.random() * currentIndex--);
 
         if (newIndex === 0) {
             continue;
