@@ -18,7 +18,6 @@ module.exports = {
                 { name: '$repeat  ($rep)', value: 'Toggle repeat mode.' },
                 { name: '$shuffle  ($sh)', value: 'Shuffle queue (works best for larger queues).' },
                 { name: '$restart', value: 'Restart the currently playing track.' },
-                { name: '$destroy', value: 'Reboot the bot, use in case of crash.' },
             );
         message.channel.send(helpMessage);
     }
