@@ -2,6 +2,7 @@ const ytdl = require('ytdl-core');
 const ytpl = require('ytpl');
 const ytSearch = require('yt-search');
 const queue = new Map();
+const nowplaying = require('./nowplaying.js');
 
 module.exports = {
     name: 'play',
@@ -102,7 +103,7 @@ module.exports = {
 
 
         else if (cmd === 'queue' || cmd === 'q') displayQueue(serverQueue, message, Discord);
-        else if (cmd === 'nowplaying' || cmd === 'np') currentSong(serverQueue, message);
+        else if (cmd === 'nowplaying' || cmd === 'np') return nowplaying.execute(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
         else if (cmd === 'voteskip' || cmd === 'v') voteSkip(serverQueue, voiceChannel, message);
         else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') stopSong(serverQueue, voiceChannel);
@@ -145,11 +146,6 @@ const displayQueue = (serverQueue, message, Discord) => {
         })
         message.channel.send(queueEmbed);
     }
-    catch (err) { console.log(err); }
-}
-
-const currentSong = (serverQueue, message) => {
-    try { message.channel.send(`Currently Playing: **${serverQueue.songs[0].title}**`) }
     catch (err) { console.log(err); }
 }
 
