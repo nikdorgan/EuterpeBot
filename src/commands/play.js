@@ -2,7 +2,11 @@ const ytdl = require('ytdl-core');
 const ytpl = require('ytpl');
 const ytSearch = require('yt-search');
 const queue = new Map();
+
 const nowplaying = require('./nowplaying.js');
+const displayQueue = require('./displayqueue.js');
+const skip = require('./skip.js');
+const voteSkip = require('./voteskip.js');
 
 module.exports = {
     name: 'play',
@@ -102,10 +106,10 @@ module.exports = {
         }
 
 
-        else if (cmd === 'queue' || cmd === 'q') displayQueue(serverQueue, message, Discord);
+        else if (cmd === 'queue' || cmd === 'q') return displayQueue.execute(serverQueue, message, Discord);
         else if (cmd === 'nowplaying' || cmd === 'np') return nowplaying.execute(serverQueue, message);
-        else if (cmd === 'skip' || cmd === 's') skipSong(serverQueue);
-        else if (cmd === 'voteskip' || cmd === 'v') voteSkip(serverQueue, voiceChannel, message);
+        else if (cmd === 'skip' || cmd === 's') return skip.execute(serverQueue);
+        else if (cmd === 'voteskip' || cmd === 'v') return voteSkip.execute(serverQueue, voiceChannel, message);
         else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') stopSong(serverQueue, voiceChannel);
         else if (cmd === 'pause' || cmd === 'resume') togglePause(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') toggleRepeat(serverQueue, message);
@@ -129,43 +133,6 @@ const videoPlayer = async (guild, song) => {
             videoPlayer(guild, songQueue.songs[0]);
         });
     await songQueue.textChannel.send(`Now Playing: **${song.title}**`)
-}
-
-
-//Other commands that use the server queue
-const displayQueue = (serverQueue, message, Discord) => {
-    try {
-        const queueEmbed = new Discord.MessageEmbed()
-            .setTitle('Queue')
-        let ctr = 0;
-        serverQueue.songs.forEach((i) => {
-            ctr++;
-            queueEmbed.addFields(
-                { name: 'Song ' + ctr + ': ', value: i.title },
-            );
-        })
-        message.channel.send(queueEmbed);
-    }
-    catch (err) { console.log(err); }
-}
-
-const skipSong = (serverQueue) => {
-    try { serverQueue.connection.dispatcher.end(); }
-    catch (err) { console.log(err); }
-}
-
-const voteSkip = (serverQueue, voiceChannel, message) => {
-    try {
-        serverQueue.votes++;
-        message.channel.send(`Votes To Skip: **${serverQueue.votes} / ${voiceChannel.members.size - 1}** `)
-
-        if (serverQueue.votes >= (voiceChannel.members.size - 1) / 2) {
-            serverQueue.votes = 0;
-            serverQueue.connection.dispatcher.end();
-            message.channel.send(`Skipping...`);
-        }
-    }
-    catch (err) { console.log(err); }
 }
 
 const stopSong = (serverQueue, voiceChannel) => {
