@@ -121,7 +121,6 @@ module.exports = {
     }
 }
 
-//Handles the actual playing of the video
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
     if (!song) {
