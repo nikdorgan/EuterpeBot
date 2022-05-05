@@ -1,5 +1,5 @@
 module.exports = {
-    description: "Vote to skip the current track. Must have at least 50% of the votes.",
+    description: 'Vote to skip the current track. Must have at least 50% of the votes.',
     execute(serverQueue, voiceChannel, message) {
         try {
             serverQueue.votes++;

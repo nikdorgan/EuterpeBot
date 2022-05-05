@@ -1,5 +1,5 @@
 module.exports = {
-    description: "Display the queue of the current tracks (up to 25).",
+    description: 'Display the queue of the current tracks (up to 25).',
     execute(serverQueue, message, Discord) {
         try {
             let ctr = 0;

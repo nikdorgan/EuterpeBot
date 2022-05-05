@@ -16,18 +16,18 @@ const shuffle = require('./shuffle');
 module.exports = {
     name: 'play',
     aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'leave', 'lv', 'repeat', 'rep', 'shuffle', 'sh', 'restart'],
-    description: "Every command involving the player queue is called here.",
+    description: 'Every command involving the player queue is called here.',
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
-        if (!voiceChannel) return message.channel.send("Please join a voice channel to use this command.");
+        if (!voiceChannel) return message.channel.send('Please join a voice channel to use this command.');
 
         const permissions = voiceChannel.permissionsFor(message.client.user);
-        if (!permissions.has('SPEAK')) return message.channel.send("You do not have permission to use this command.");
+        if (!permissions.has('SPEAK')) return message.channel.send('You do not have permission to use this command.');
 
         const serverQueue = queue.get(message.guild.id);
 
         if (cmd === 'play' || cmd === 'p') {
-            if (!args.length) return message.channel.send("Please input a link or search query with this command.");
+            if (!args.length) return message.channel.send('Please input a link or search query with this command.');
             let song = {};
             let playlist;
 
@@ -42,7 +42,7 @@ module.exports = {
                 playlist = await ytpl(args[0]);
                 const songInfo = await ytdl.getInfo(playlist.items[0].url);
                 song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
-                message.channel.send("Queueing playlist videos (this may take a moment)...");
+                message.channel.send('Queueing playlist videos (this may take a moment)...');
             } else {
                 const videoFinder = async (query) => {
                     const video_result = await ytSearch(query);
@@ -52,7 +52,7 @@ module.exports = {
                 if (video) {
                     song = { title: video.title, url: video.url }
                 } else {
-                    return message.channel.send("There was an error trying to find this video.");
+                    return message.channel.send('There was an error trying to find this video.');
                 }
             }
 
@@ -82,7 +82,7 @@ module.exports = {
                     videoPlayer(message.guild, queueConstructor.songs[0]);
                 } catch (err) {
                     queue.delete(message.guild.id);
-                    return message.channel.send("There was an error trying to connect to the voice channel.");
+                    return message.channel.send('There was an error trying to connect to the voice channel.');
                 }
             } else {
                 serverQueue.songs.push(song);
