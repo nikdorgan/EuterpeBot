@@ -4,8 +4,7 @@ module.exports = {
         try {
             shuffle(serverQueue);
             message.channel.send(`Queue shuffled...`);
-        }
-        catch (err) { console.log(err); }
+        } catch (err) { console.log(err); }
     }
 }
 

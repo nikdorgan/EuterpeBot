@@ -1,8 +1,7 @@
 module.exports = {
     name: 'help',
-    description: 'Show bot commands.',
     execute(message, args, cmd, bot, Discord) {
-        const helpEmbed = new Discord.MessageEmbed()
+        const helpMessage = new Discord.MessageEmbed()
             .setTitle('Commands')
             .addFields(
                 { name: '$play URL  ($p)', value: 'Add video or playlist from the given URL to the queue.' },
@@ -20,6 +19,6 @@ module.exports = {
                 { name: '$shuffle  ($sh)', value: 'Shuffle queue (works best for larger queues).' },
                 { name: '$restart', value: 'Restart the currently playing track.' },
             );
-        message.channel.send(helpEmbed);
+        message.channel.send(helpMessage);
     }
 }

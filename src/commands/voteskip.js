@@ -9,7 +9,6 @@ module.exports = {
                 serverQueue.connection.dispatcher.end();
                 message.channel.send(`Skipping...`);
             }
-        }
-        catch (err) { console.log(err); }
+        } catch (err) { console.log(err); }
     }
 }

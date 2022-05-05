@@ -1,8 +1,3 @@
-const ytdl = require('ytdl-core');
-const ytpl = require('ytpl');
-const ytSearch = require('yt-search');
-const queue = new Map();
-
 const nowplaying = require('./nowplaying');
 const displayQueue = require('./queue');
 const skip = require('./skip');
@@ -13,9 +8,15 @@ const toggleRepeat = require('./togglerepeat');
 const restart = require('./restart');
 const shuffle = require('./shuffle');
 
+const ytdl = require('ytdl-core');
+const ytpl = require('ytpl');
+const ytSearch = require('yt-search');
+const queue = new Map();
+
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'leave', 'lv', 'repeat', 'rep', 'shuffle', 'sh', 'restart'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'leave', 'lv',
+        'repeat', 'rep', 'shuffle', 'sh', 'restart'],
     description: 'Every command involving the player queue is called here.',
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -31,10 +32,12 @@ module.exports = {
             let song = {};
             let playlist;
 
-            //Handles the video searching
-            //The if block checks for valid video URL, stores video info as song to pass to the queue if so
-            //The else-if block checks for valid playlist URL, stores all contained video URLs and passes first song info to queue
-            //The else block is for when user inputs video title instead of URL, searches title and uses first resulting song
+            /*
+                This big block handles the video searching
+                The if block checks for valid video URL, stores resulting video info as "song" to pass to the queue if so.
+                The else-if block checks for valid playlist ID (URL), stores all contained video URLs and passes first song info to queue.
+                The else block is for when user inputs video title instead of URL, searches title and uses first resulting song. 
+            */
             if (ytdl.validateURL(args[0])) {
                 const songInfo = await ytdl.getInfo(args[0]);
                 song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
@@ -48,15 +51,14 @@ module.exports = {
                     const video_result = await ytSearch(query);
                     return (video_result.videos.length > 1) ? video_result.videos[0] : null;
                 }
-                const video = await videoFinder(args.join(' '));
-                if (video) {
-                    song = { title: video.title, url: video.url }
+                const songInfo = await videoFinder(args.join(' '));
+                if (songInfo) {
+                    song = { title: songInfo.title, url: songInfo.url }
                 } else {
                     return message.channel.send('There was an error trying to find this video.');
                 }
             }
 
-            //Handles the queueing of the video(s) found above
             if (!serverQueue) {
                 const queueConstructor = {
                     voiceChannel: voiceChannel,
@@ -66,8 +68,10 @@ module.exports = {
                     votes: 0,
                     songs: []
                 }
+
                 queue.set(message.guild.id, queueConstructor);
                 queueConstructor.songs.push(song);
+
                 if (playlist) {
                     for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
@@ -76,6 +80,7 @@ module.exports = {
                     }
                     playlist = null;
                 }
+
                 try {
                     const connection = await voiceChannel.join();
                     queueConstructor.connection = connection;

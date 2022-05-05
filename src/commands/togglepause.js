@@ -4,7 +4,6 @@ module.exports = {
         try {
             serverQueue.connection.dispatcher.pause(true);
             serverQueue.connection.dispatcher.resume();
-        }
-        catch (err) { console.log(err); }
+        } catch (err) { console.log(err); }
     }
 }
