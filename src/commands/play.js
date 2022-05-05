@@ -33,9 +33,12 @@ module.exports = {
             let playlist;
 
             /*
-                This big block handles the video searching
+                This big block handles the video searching.
                 The if block checks for valid video URL, stores resulting video info as "song" to pass to the queue if so.
-                The else-if block checks for valid playlist ID (URL), stores all contained video URLs and passes first song info to queue.
+
+                The else-if block checks for valid playlist ID (URL), stores all contained video URLs and passes first song info to queue,
+                the rest of the playlists songs get added to the queue in the next block.
+
                 The else block is for when user inputs video title instead of URL, searches title and uses first resulting song. 
             */
             if (ytdl.validateURL(args[0])) {
@@ -91,6 +94,7 @@ module.exports = {
                 }
             } else {
                 serverQueue.songs.push(song);
+
                 if (playlist) {
                     for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
@@ -100,6 +104,7 @@ module.exports = {
                     message.channel.send(`**${playlist.title}** added to queue.`);
                     return playlist = null;
                 }
+
                 return message.channel.send(`**${song.title}** added to queue.`);
             }
         }
@@ -116,18 +121,16 @@ module.exports = {
     }
 }
 
-//Handles the actual playing of the video in the chat
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
     if (!song) {
         songQueue.voiceChannel.leave();
-        queue.delete(guild.id);
-        return;
+        return queue.delete(guild.id);
     }
     const stream = ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 });
     songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
         .on('finish', () => {
-            if (songQueue.loop === false) songQueue.songs.shift();
+            if (!songQueue.loop) songQueue.songs.shift();
             songQueue.votes = 0;
             videoPlayer(guild, songQueue.songs[0]);
         });
