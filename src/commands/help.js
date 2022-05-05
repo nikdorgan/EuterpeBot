@@ -16,7 +16,8 @@ module.exports = {
                 { name: '$resume', value: 'Resume the player.' },
                 { name: '$join  ($j)', value: 'Make EuterpeBot join your current voice channel.' },
                 { name: '$leave  ($lv)', value: 'Make EuterpeBot leave the current voice channel.' },
-                { name: '$repeat  ($rep)', value: 'Toggles repeat mode.' },
+                { name: '$repeat  ($rep)', value: 'Toggle repeat mode.' },
+                { name: '$shuffle  ($sh)', value: 'Shuffle queue.' },
                 { name: '$restart', value: 'Restart the currently playing track.' },
             );
         message.channel.send(helpEmbed);

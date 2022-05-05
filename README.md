@@ -33,6 +33,8 @@ $leave  ($lv) - Make EuterpeBot leave the current voice channel.
 
 $repeat  ($rep) - Change to repeat mode.
 
+$shuffle  ($sh) - Shuffle queue.
+
 $restart - Restart the currently playing track.
 
 $help - Show bot commands.
