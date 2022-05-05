@@ -9,6 +9,7 @@ module.exports = {
     }
 }
 
+//The CLASSIC Fisher-Yates Shuffle
 const shuffle = (serverQueue) => {
     let currentIndex = serverQueue.songs.length;
     let newIndex, temp;
