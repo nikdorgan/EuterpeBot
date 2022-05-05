@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = {
     name: 'destroy',
-    execute(message, args, cmd, bot, Discord) {
+    async execute(message, args, cmd, bot, Discord) {
         message.channel.send("Attempting a restart...").then(msg => {
             //msg.react('🆗');
             setTimeout(function () {
