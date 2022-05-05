@@ -37,6 +37,8 @@ $shuffle  ($sh) - Shuffle queue (works best for larger queues).
 
 $restart - Restart the currently playing track.
 
+$destroy - Reboot the bot, use in case of crash.
+
 $help - Show bot commands.
 
 
