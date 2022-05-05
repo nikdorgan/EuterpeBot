@@ -30,7 +30,6 @@ module.exports = {
             let song = {};
             let playlist;
 
-
             //Handles the video searching
             //The if block checks for valid video URL, stores video info as song to pass to the queue if so
             //The else-if block checks for valid playlist URL, stores all contained video URLs and passes first song info to queue
@@ -56,7 +55,6 @@ module.exports = {
                 }
             }
 
-
             //Handles the queueing of the video(s) found above
             if (!serverQueue) {
                 const queueConstructor = {
@@ -69,19 +67,14 @@ module.exports = {
                 }
                 queue.set(message.guild.id, queueConstructor);
                 queueConstructor.songs.push(song);
-
-                //pushes playlist songs on queue then clears playlist
                 if (playlist) {
                     for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
-                        if (song.title !== playlistSong.title) {
-                            queueConstructor.songs.push(playlistSong);
-                        }
+                        if (song.title !== playlistSong.title) queueConstructor.songs.push(playlistSong);
                     }
                     playlist = null;
                 }
-
                 try {
                     const connection = await voiceChannel.join();
                     queueConstructor.connection = connection;
@@ -92,23 +85,18 @@ module.exports = {
                 }
             } else {
                 serverQueue.songs.push(song);
-
                 if (playlist) {
                     for (const i of playlist.items) {
                         const songInfo = await ytdl.getInfo(i.url);
                         playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
-                        if (song.title !== playlistSong.title) {
-                            serverQueue.songs.push(playlistSong);
-                        }
+                        if (song.title !== playlistSong.title) serverQueue.songs.push(playlistSong);
                     }
                     message.channel.send(`**${playlist.title}** added to queue.`);
                     return playlist = null;
                 }
-
                 return message.channel.send(`**${song.title}** added to queue.`);
             }
         }
-
 
         else if (cmd === 'queue' || cmd === 'q') return displayQueue.execute(serverQueue, message, Discord);
         else if (cmd === 'nowplaying' || cmd === 'np') return nowplaying.execute(serverQueue, message);
