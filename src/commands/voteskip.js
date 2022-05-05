@@ -4,7 +4,6 @@ module.exports = {
         try {
             serverQueue.votes++;
             message.channel.send(`Votes To Skip: **${serverQueue.votes} / ${voiceChannel.members.size - 1}** `)
-
             if (serverQueue.votes >= (voiceChannel.members.size - 1) / 2) {
                 serverQueue.votes = 0;
                 serverQueue.connection.dispatcher.end();
