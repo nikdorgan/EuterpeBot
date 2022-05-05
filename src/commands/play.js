@@ -111,6 +111,7 @@ module.exports = {
     }
 }
 
+//Handles the actual playing of the video in the chat
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
     if (!song) {
