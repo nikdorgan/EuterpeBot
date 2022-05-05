@@ -1,5 +1,5 @@
 module.exports = {
-    description: "Test",
+    description: "Pause/Resume the player.",
     execute(serverQueue) {
         try {
             serverQueue.connection.dispatcher.pause(true);

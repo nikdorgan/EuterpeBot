@@ -19,7 +19,6 @@ module.exports = {
                 { name: '$repeat  ($rep)', value: 'Toggles repeat mode.' },
                 { name: '$restart', value: 'Restart the currently playing track.' },
             );
-
         message.channel.send(helpEmbed);
     }
 }

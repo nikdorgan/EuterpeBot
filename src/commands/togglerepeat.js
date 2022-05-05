@@ -1,5 +1,5 @@
 module.exports = {
-    description: "Test",
+    description: "Toggles repeat mode.",
     execute(serverQueue, message) {
         try {
             if (serverQueue.loop === false) {

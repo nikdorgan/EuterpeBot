@@ -1,5 +1,5 @@
 module.exports = {
-    description: "Test",
+    description: "Display the queue of the current tracks (up to 25).",
     execute(serverQueue, message, Discord) {
         try {
             const queueEmbed = new Discord.MessageEmbed()
