@@ -7,16 +7,13 @@ const togglePause = require('./togglepause');
 const toggleRepeat = require('./togglerepeat');
 const restart = require('./restart');
 const shuffle = require('./shuffle');
-
-const ytdl = require('ytdl-core');
-const ytpl = require('ytpl');
+const playdl = require('play-dl');
 const ytSearch = require('yt-search');
 const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'leave', 'lv',
-        'repeat', 'rep', 'shuffle', 'sh', 'restart'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'shuffle', 'sh', 'restart'],
     description: 'Every command involving the player queue is called here.',
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -32,23 +29,12 @@ module.exports = {
             let song = {};
             let playlist;
 
-            /*
-                This big block handles the video searching.
-                The if block checks for valid video URL, stores resulting video info as "song" to pass to the queue if so.
-
-                The else-if block checks for valid playlist ID (URL), stores all contained video URLs and passes first song info to queue,
-                the rest of the playlists songs get added to the queue in the next block.
-
-                The else block is for when user inputs video title instead of URL, searches title and uses first resulting song. 
-            */
-            if (ytdl.validateURL(args[0])) {
-                const songInfo = await ytdl.getInfo(args[0]);
-                song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
-            } else if (ytpl.validateID(args[0])) {
-                playlist = await ytpl(args[0]);
-                const songInfo = await ytdl.getInfo(playlist.items[0].url);
-                song = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
-                message.channel.send('Queueing playlist videos (this may take a moment)...');
+            if (playdl.yt_validate(args[0]) === 'video') {
+                const songInfo = await playdl.video_info(args[0]);
+                song = { title: songInfo.video_details.title, url: songInfo.video_details.url }
+            } else if (playdl.yt_validate(args[0]) === 'playlist') {
+                playlist = await playdl.playlist_info(args[0], { incomplete: true });
+                song = { title: playlist.videos[0].title, url: playlist.videos[0].url }
             } else {
                 const videoFinder = async (query) => {
                     const video_result = await ytSearch(query);
@@ -76,9 +62,8 @@ module.exports = {
                 queueConstructor.songs.push(song);
 
                 if (playlist) {
-                    for (const i of playlist.items) {
-                        const songInfo = await ytdl.getInfo(i.url);
-                        playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
+                    for (const i of playlist.videos) {
+                        playlistSong = { title: i.title, url: i.url }
                         if (song.title !== playlistSong.title) queueConstructor.songs.push(playlistSong);
                     }
                     playlist = null;
@@ -96,9 +81,8 @@ module.exports = {
                 serverQueue.songs.push(song);
 
                 if (playlist) {
-                    for (const i of playlist.items) {
-                        const songInfo = await ytdl.getInfo(i.url);
-                        playlistSong = { title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url }
+                    for (const i of playlist.videos) {
+                        playlistSong = { title: i.title, url: i.url }
                         if (song.title !== playlistSong.title) serverQueue.songs.push(playlistSong);
                     }
                     message.channel.send(`**${playlist.title}** added to queue.`);
@@ -113,7 +97,7 @@ module.exports = {
         else if (cmd === 'nowplaying' || cmd === 'np') return nowplaying.execute(serverQueue, message);
         else if (cmd === 'skip' || cmd === 's') return skip.execute(serverQueue);
         else if (cmd === 'voteskip' || cmd === 'v') return voteSkip.execute(serverQueue, voiceChannel, message);
-        else if (cmd === 'stop' || cmd === 'st' || cmd === 'leave' || cmd === 'lv') return stop.execute(serverQueue, voiceChannel);
+        else if (cmd === 'stop' || cmd === 'st') return stop.execute(serverQueue, voiceChannel);
         else if (cmd === 'pause' || cmd === 'resume') return togglePause.execute(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') return toggleRepeat.execute(serverQueue, message);
         else if (cmd === 'shuffle' || cmd === 'sh') return shuffle.execute(serverQueue, message);
@@ -127,8 +111,8 @@ const videoPlayer = async (guild, song) => {
         songQueue.voiceChannel.leave();
         return queue.delete(guild.id);
     }
-    const stream = ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 });
-    songQueue.connection.play(stream, { seek: 0, volume: 0.5 })
+    const stream = await playdl.stream(song.url, { quality: 2, discordPlayerCompatibility: true });
+    songQueue.connection.play(stream.stream)
         .on('finish', () => {
             if (!songQueue.loop) songQueue.songs.shift();
             songQueue.votes = 0;

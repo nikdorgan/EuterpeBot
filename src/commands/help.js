@@ -14,7 +14,6 @@ module.exports = {
                 { name: '$pause', value: 'Pause the player.' },
                 { name: '$resume', value: 'Resume the player.' },
                 { name: '$join  ($j)', value: 'Make EuterpeBot join your current voice channel.' },
-                { name: '$leave  ($lv)', value: 'Make EuterpeBot leave the current voice channel.' },
                 { name: '$repeat  ($rep)', value: 'Toggle repeat mode.' },
                 { name: '$shuffle  ($sh)', value: 'Shuffle queue (works best for larger queues).' },
                 { name: '$restart', value: 'Restart the currently playing track.' },
