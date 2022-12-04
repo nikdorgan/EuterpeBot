@@ -37,8 +37,8 @@ module.exports = {
                 song = { title: playlist.videos[0].title, url: playlist.videos[0].url }
             } else {
                 const videoFinder = async (query) => {
-                    const video_result = await ytSearch(query);
-                    return (video_result.videos.length > 1) ? video_result.videos[0] : null;
+                    const videoResult = await ytSearch(query);
+                    return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
                 }
                 const songInfo = await videoFinder(args.join(' '));
                 if (songInfo) {
