@@ -23,8 +23,6 @@ $voteskip  ($v) - Vote to skip the current track. Must have at least 50% of the 
 
 $stop  ($st) - Stop the player and clear the queue.
 
-$join  ($j) - Make EuterpeBot join your current voice channel.
-
 $repeat  ($rep) - Change to repeat mode.
 
 $shuffle  ($sh) - Shuffle queue (works best for larger queues).

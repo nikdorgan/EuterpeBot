@@ -11,7 +11,6 @@ module.exports = {
                 { name: '$skip  ($s)', value: 'Remove the currently playing track from the queue.' },
                 { name: '$voteskip  ($v)', value: 'Vote to skip the current track. Must have at least 50% of the votes.' },
                 { name: '$stop  ($st)', value: 'Stop the player and clear the queue.' },
-                { name: '$join  ($j)', value: 'Make EuterpeBot join your current voice channel.' },
                 { name: '$repeat  ($rep)', value: 'Toggle repeat mode.' },
                 { name: '$shuffle  ($sh)', value: 'Shuffle queue (works best for larger queues).' },
                 { name: '$restart ($res)', value: 'Restart the currently playing track.' },
