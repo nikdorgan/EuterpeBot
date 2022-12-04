@@ -106,6 +106,7 @@ module.exports = {
 
 const videoPlayer = async (guild, song) => {
     const songQueue = queue.get(guild.id);
+    console.log(songQueue)
     if (!song) {
         songQueue.voiceChannel.leave();
         return queue.delete(guild.id);
