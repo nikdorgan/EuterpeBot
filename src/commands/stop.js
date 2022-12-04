@@ -4,6 +4,7 @@ module.exports = {
         try {
             serverQueue.songs = [];
             serverQueue.connection.dispatcher.end();
+            voiceChannel.leave();
         } catch (err) {
             voiceChannel.leave();
             console.log(err);

@@ -3,7 +3,6 @@ const displayQueue = require('./queue');
 const skip = require('./skip');
 const voteSkip = require('./voteskip');
 const stop = require('./stop');
-const togglePause = require('./togglepause');
 const toggleRepeat = require('./togglerepeat');
 const restart = require('./restart');
 const shuffle = require('./shuffle');
@@ -13,7 +12,7 @@ const queue = new Map();
 
 module.exports = {
     name: 'play',
-    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'shuffle', 'sh', 'restart'],
+    aliases: ['p', 'queue', 'q', 'nowplaying', 'np', 'skip', 's', 'voteskip', 'v', 'stop', 'st', 'pause', 'resume', 'repeat', 'rep', 'shuffle', 'sh', 'restart', 'res'],
     description: 'Every command involving the player queue is called here.',
     async execute(message, args, cmd, bot, Discord) {
         const voiceChannel = message.member.voice.channel;
@@ -101,7 +100,7 @@ module.exports = {
         else if (cmd === 'pause' || cmd === 'resume') return togglePause.execute(serverQueue);
         else if (cmd === 'repeat' || cmd === 'rep') return toggleRepeat.execute(serverQueue, message);
         else if (cmd === 'shuffle' || cmd === 'sh') return shuffle.execute(serverQueue, message);
-        else if (cmd === 'restart') return restart.execute(videoPlayer, serverQueue, message);
+        else if (cmd === 'restart' || cmd === 'res') return restart.execute(videoPlayer, serverQueue, message);
     }
 }
 
